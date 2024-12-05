@@ -1,0 +1,77 @@
+@{
+    ViewBag.Title = "Regístrate";
+}
+
+<div class="container-fluid p-0">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" asp-area="" asp-controller="Home" asp-action="Index">
+                <i class="bi bi-bank"></i> NeoFintech
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" asp-area="" asp-controller="Home" asp-action="Login">
+                            <i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Register">
+                            <i class="bi bi-person-plus"></i> Solicitar
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Register Section -->
+    <header class="bg-light text-center py-5" style="min-height: 100vh; display: flex; justify-content: center; align-items: center;">
+        <div class="container">
+            <h1 class="display-4 fw-bold text-primary mb-4">Formulario de Registro</h1>
+            <p class="lead text-secondary mb-5">Por favor, ingresa tus datos para completar tu solicitud.</p>
+
+            @model ProyectoIndursa.Models.Usuario
+
+            @using (Html.BeginForm("RegisterCompleted", "Home", FormMethod.Post, new { @class = "form-register" }))
+            {
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.Nombre, new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control", placeholder = "Nombre(s)" })
+                    @Html.ValidationMessageFor(m => m.Nombre, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.ApellidoPaterno, new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.ApellidoPaterno, new { @class = "form-control", placeholder = "Apellido Paterno" })
+                    @Html.ValidationMessageFor(m => m.ApellidoPaterno, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.ApellidoMaterno, new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.ApellidoMaterno, new { @class = "form-control", placeholder = "Apellido Materno" })
+                    @Html.ValidationMessageFor(m => m.ApellidoMaterno, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.FechaDeNacimiento, new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.FechaDeNacimiento, new { @type = "date", @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.FechaDeNacimiento, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.Curp, new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.Curp, new { @class = "form-control", placeholder = "CURP" })
+                    @Html.ValidationMessageFor(m => m.Curp, "", new { @class = "text-danger" })
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-lg w-100">Registrar</button>
+            }
+        </div>
+    </header>
+</div>

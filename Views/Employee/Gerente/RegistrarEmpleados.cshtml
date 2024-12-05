@@ -1,0 +1,52 @@
+@{
+    ViewBag.Title = "Regístrate";
+}
+<div>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <div class="container-fluid">
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Indursa</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div>
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Login">Iniciar Sesion</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Register">Solicitar</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    @* @model ProyectoIndursa.Models.Empleado
+    <h2>Datos del Solicitante</h2>
+    @using (Html.BeginForm("RegisterCompleted", "Home", FormMethod.Post))
+    {
+        <ul style="list-style-type:none;">
+            <li>
+                @Html.TextBoxFor(m=>m.Nombre,new{placeholder="Nombre(s)"})
+                @Html.ValidationMessageFor(m=>m.Nombre)
+            </li>
+            <li>
+                @Html.TextBoxFor(m=>m.ApellidoPaterno,new{placeholder="Apellido Paterno"})
+                @Html.ValidationMessageFor(m=>m.ApellidoPaterno)
+            </li>
+            <li>
+                @Html.TextBoxFor(m=>m.ApellidoMaterno,new {placeholder="Apellido Materno"})
+                @Html.ValidationMessageFor(m=>m.ApellidoMaterno)
+            </li>
+            <li>
+                @Html.TextBoxFor(m => m.FechaDeNacimiento, new { @type="date" } )
+                @Html.ValidationMessageFor(m=>m.FechaDeNacimiento)
+            </li>
+            <li>
+                @Html.TextBoxFor(m=>m.Curp,new {placeholder = "CURP" })
+                @Html.ValidationMessageFor(m=>m.Curp)
+            </li>
+        </ul>
+        <input type="submit">
+    } *@
+</div>

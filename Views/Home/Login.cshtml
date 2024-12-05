@@ -1,0 +1,59 @@
+@{
+    ViewBag.Title = "Login";
+}
+
+<div class="container-fluid p-0">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" asp-area="" asp-controller="Home" asp-action="Index">
+                <i class="bi bi-bank"></i> NeoFintech
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" asp-area="" asp-controller="Home" asp-action="Login">
+                            <i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Register">
+                            <i class="bi bi-person-plus"></i> Solicitar
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Login Section -->
+    <header class="bg-light text-center py-5" style="min-height: 100vh; display: flex; justify-content: center; align-items: center;">
+        <div class="container">
+            <h1 class="display-3 fw-bold text-primary mb-4">Bienvenido a NeoFintech</h1>
+            <p class="lead text-secondary mb-5">Accede a tu cuenta de forma segura.</p>
+
+            @model ProyectoIndursa.Models.Cuentum;
+
+            @using (Html.BeginForm("Index", "User", FormMethod.Post, new { @class = "form-signin" }))
+            {
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.NoCuenta, new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.NoCuenta, new { @class = "form-control", placeholder = "Número de Cuenta" })
+                    @Html.ValidationMessageFor(m => m.NoCuenta, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.Password, new { @class = "form-label" })
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Contraseña" })
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-lg w-100">Iniciar Sesión</button>
+            }
+        </div>
+    </header>
+</div>

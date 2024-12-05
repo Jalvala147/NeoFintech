@@ -1,0 +1,82 @@
+@{
+	ViewData["Title"] = "Usuario";
+}
+<div>
+	<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+		<div class="container-fluid">
+			<a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Indursa</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
+				aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div>
+				<ul class="navbar-nav flex-grow-1">
+					<img src="image.png" alt="" class="logo">
+					<li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-controller="User"
+							asp-action="Saldo">Saldo</a></li>
+					<li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-controller="User"
+							asp-action="Prestamo">Prestamo</a></li>
+					<li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-controller="User"
+							asp-action="Historial">Historial de Prestamos</a></li>
+					<li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-controller="User"
+							asp-action="Perfil">Información de Cuenta</a></li>
+				</ul>
+	</nav>
+	@{
+		int count = 0;
+		var db = new ProyectoIndursa.IndursaContext.IndursaDB();
+		var folio = from s in db.DatosPrestamos
+					where
+					s.SolicitadoPor == Int32.Parse(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value)
+					select s.Folio;
+		var pActivos = from s in db.EstadoPrestamos
+					where
+					folio.First() == s.Folio
+					select s;
+		var saldo = from s in db.InfoCuenta
+					where
+					s.NoCuenta == Int32.Parse(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value)
+					select s.Saldo;
+		foreach (var item in pActivos)
+		{
+			if (item.Estado==1)
+			{
+				count++;
+			}
+		}
+		if (count <= 0 && saldo.First() >= 10000)
+		{
+				Html.BeginForm("SolicitarPrestamo","User");
+				<button type="submit" name="button">Solicitar Prestamo</button>
+				Html.EndForm();
+		}
+		else if(saldo.First() < 10000)
+		{
+			<h2>No cuentas con el saldo suficiente para solicitar un prestamo</h2>
+		}
+		else
+		{
+			<table>
+				<thead>
+					<tr>
+						<td>Folio</td>
+						<td>Cantidad</td>
+						<td>Pagos Realizados</td>
+						<td>Pagos Pendientes</td>
+					</tr>
+				</thead>
+				<tbody>
+			@foreach (var item in pActivos)
+			{
+				<tr>
+					<td>@item.Folio</td>
+					<td>aaaaaeee</td>
+					<td>@item.PagoRealizados</td>
+					<td>@item.PagoPedientes</td>
+				</tr>
+			}
+			</tbody>
+			</table>
+		}
+	}
+</div>

@@ -1,0 +1,49 @@
+﻿@{
+    ViewBag.Title = "NeoFintech";
+}
+
+<div class="container-fluid p-0">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" asp-area="" asp-controller="Home" asp-action="Index">
+                <i class="bi bi-bank"></i> NeoFintech
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" asp-area="" asp-controller="Home" asp-action="Login">
+                            <i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Register">
+                            <i class="bi bi-person-plus"></i> Solicitar
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section (Full Screen) -->
+    <header class="bg-light text-center py-5" style="min-height: 100vh; display: flex; justify-content: center; align-items: center;">
+        <div class="container text-center">
+            <h1 class="display-3 fw-bold text-primary">Bienvenido a NeoFintech</h1>
+            <p class="lead text-secondary">Tu solución financiera moderna y confiable</p>
+        </div>
+    </header>
+</div>
+
+<!-- Add custom CSS for no-scroll -->
+<style>
+    /* Disable page scrolling */
+    body, html {
+        height: 100%;
+        overflow: hidden;
+    }
+</style>
