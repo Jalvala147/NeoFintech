@@ -4,30 +4,35 @@
 }
 
 <partial name="_NavUser" />
-<div class="container pb-5" style="max-width: 560px;">
-    <h1 class="h3 mb-3">Comprobante</h1>
-    <div class="card">
-        <div class="card-body">
-            <dl class="row mb-0">
-                <dt class="col-sm-5">Folio</dt>
-                <dd class="col-sm-7">@Model.Folio</dd>
-                <dt class="col-sm-5">Cuenta</dt>
-                <dd class="col-sm-7">@Model.NoCuenta</dd>
-                <dt class="col-sm-5">Tipo</dt>
-                <dd class="col-sm-7">@Model.Tipo</dd>
-                <dt class="col-sm-5">Concepto</dt>
-                <dd class="col-sm-7">@Model.Concepto</dd>
-                <dt class="col-sm-5">Monto</dt>
-                <dd class="col-sm-7">$@Model.Monto.ToString("N2")</dd>
-                <dt class="col-sm-5">Saldo resultante</dt>
-                <dd class="col-sm-7">$@Model.SaldoResultante.ToString("N2")</dd>
-                <dt class="col-sm-5">Referencia</dt>
-                <dd class="col-sm-7">@(Model.Referencia ?? "—")</dd>
-                <dt class="col-sm-5">Fecha</dt>
-                <dd class="col-sm-7">@Model.Fecha.ToString("dd/MM/yyyy HH:mm")</dd>
-            </dl>
+<div class="nf-page">
+    <div class="nf-shell">
+        <div class="nf-panel nf-panel--mid">
+            <p class="nf-kicker">Operación exitosa</p>
+            <h1 class="nf-title">Comprobante</h1>
+            <div class="nf-receipt mt-3">
+                <dl>
+                    <dt>Folio</dt>
+                    <dd>@Model.Folio</dd>
+                    <dt>Cuenta</dt>
+                    <dd>@Model.NoCuenta</dd>
+                    <dt>Tipo</dt>
+                    <dd>@Model.Tipo</dd>
+                    <dt>Concepto</dt>
+                    <dd>@Model.Concepto</dd>
+                    <dt>Monto</dt>
+                    <dd>$@Model.Monto.ToString("N2")</dd>
+                    <dt>Saldo resultante</dt>
+                    <dd>$@Model.SaldoResultante.ToString("N2")</dd>
+                    <dt>Referencia</dt>
+                    <dd>@(Model.Referencia ?? "—")</dd>
+                    <dt>Fecha</dt>
+                    <dd>@Model.Fecha.ToString("dd/MM/yyyy HH:mm")</dd>
+                </dl>
+            </div>
+            <div class="nf-toolbar mt-3 mb-0">
+                <a class="btn btn-primary" asp-action="Movimientos">Ver movimientos</a>
+                <a class="btn btn-outline-secondary" asp-action="Index">Inicio</a>
+            </div>
         </div>
     </div>
-    <a class="btn btn-primary mt-3" asp-action="Movimientos">Ver movimientos</a>
-    <a class="btn btn-outline-secondary mt-3" asp-action="Index">Inicio</a>
 </div>

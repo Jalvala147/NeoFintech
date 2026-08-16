@@ -4,16 +4,21 @@
 }
 
 <partial name="_NavUser" />
-<div class="container pb-5" style="max-width: 480px;">
-    <h1 class="h3 mb-3">Solicitar préstamo</h1>
-    <p class="text-secondary">Puedes solicitar entre $1,000 y $@(((decimal)ViewBag.Maximo).ToString("N2")). Interés del 10% a 12 meses.</p>
-    <form asp-action="SolicitarPrestamo" method="post">
-        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
-        <div class="mb-3">
-            <label asp-for="Cantidad" class="form-label"></label>
-            <input asp-for="Cantidad" class="form-control" type="number" min="1" step="0.01" />
-            <span asp-validation-for="Cantidad" class="text-danger"></span>
+<div class="nf-page">
+    <div class="nf-shell">
+        <div class="nf-panel nf-panel--narrow">
+            <p class="nf-kicker">Nueva solicitud</p>
+            <h1 class="nf-title">Solicitar préstamo</h1>
+            <p class="nf-lead">Entre $1,000 y $@(((decimal)ViewBag.Maximo).ToString("N2")). Interés 10% a 12 meses.</p>
+            <form asp-action="SolicitarPrestamo" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                <div class="mb-3">
+                    <label asp-for="Cantidad" class="form-label"></label>
+                    <input asp-for="Cantidad" class="form-control" type="number" min="1" step="0.01" />
+                    <span asp-validation-for="Cantidad" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Enviar solicitud</button>
+            </form>
         </div>
-        <button type="submit" class="btn btn-primary w-100">Enviar solicitud</button>
-    </form>
+    </div>
 </div>

@@ -4,67 +4,84 @@
 }
 
 <partial name="_NavUser" />
-<div class="container pb-5">
-    <h1 class="h3 mb-3">Préstamos</h1>
-    <p>Saldo actual: <strong>$@(((decimal)ViewBag.Saldo).ToString("N2"))</strong>
-        · Máximo a solicitar: <strong>$@(((decimal)ViewBag.Maximo).ToString("N2"))</strong></p>
-    <partial name="_Alerts" />
-    @if (ViewBag.Mensaje is string mensaje)
-    {
-        <div class="alert alert-warning">@mensaje</div>
-    }
+<div class="nf-page">
+    <div class="nf-shell">
+        <p class="nf-kicker">Crédito</p>
+        <h1 class="nf-title">Préstamos</h1>
+        <p class="nf-lead">
+            Saldo actual <strong>$@(((decimal)ViewBag.Saldo).ToString("N2"))</strong>
+            · Máximo a solicitar <strong>$@(((decimal)ViewBag.Maximo).ToString("N2"))</strong>
+        </p>
+        <partial name="_Alerts" />
+        @if (ViewBag.Mensaje is string mensaje)
+        {
+            <div class="alert alert-warning">@mensaje</div>
+        }
 
-    @if (ViewBag.PuedeSolicitar == true)
-    {
-        <a class="btn btn-primary mb-3" asp-action="SolicitarPrestamo">Solicitar préstamo</a>
-    }
-    <a class="btn btn-outline-secondary mb-3" asp-action="Historial">Ver historial</a>
+        <div class="nf-toolbar">
+            @if (ViewBag.PuedeSolicitar == true)
+            {
+                <a class="btn btn-primary" asp-action="SolicitarPrestamo">Solicitar préstamo</a>
+            }
+            <a class="btn btn-outline-secondary" asp-action="Historial">Ver historial</a>
+        </div>
 
-    @if (Model.Any())
-    {
-        <table class="table table-striped align-middle">
-            <thead>
-                <tr>
-                    <th>Folio</th>
-                    <th>Cantidad</th>
-                    <th>Mensualidad</th>
-                    <th>Pagos</th>
-                    <th>Estado</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>@item.Folio</td>
-                        <td>$@item.Cantidad.ToString("N2")</td>
-                        <td>$@item.Mensualidad.ToString("N2")</td>
-                        <td>@item.PagoRealizados / @(item.PagoRealizados + item.PagoPedientes)</td>
-                        <td>
-                            @item.EstadoTexto
-                            @if (item.Vencido)
-                            {
-                                <span class="badge bg-danger">Vencido +$50 mora</span>
-                            }
-                            @if (!string.IsNullOrEmpty(item.MotivoRechazo))
-                            {
-                                <div class="small text-muted">@item.MotivoRechazo</div>
-                            }
-                        </td>
-                        <td>
-                            <a class="btn btn-outline-secondary btn-sm" asp-action="DetallePrestamo" asp-route-folio="@item.Folio">Detalle</a>
-                            @if (item.Estado == 1)
-                            {
-                                <form asp-action="PagarPrestamo" method="post" class="d-inline">
-                                    <input type="hidden" name="folio" value="@item.Folio" />
-                                    <button type="submit" class="btn btn-primary btn-sm">Pagar mensualidad</button>
-                                </form>
-                            }
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    }
+        @if (Model.Any())
+        {
+            <div class="nf-table-wrap">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Folio</th>
+                            <th>Cantidad</th>
+                            <th>Mensualidad</th>
+                            <th>Pagos</th>
+                            <th>Estado</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Folio</td>
+                                <td>$@item.Cantidad.ToString("N2")</td>
+                                <td>$@item.Mensualidad.ToString("N2")</td>
+                                <td>@item.PagoRealizados / @(item.PagoRealizados + item.PagoPedientes)</td>
+                                <td>
+                                    <span class="nf-badge @(item.Estado switch { 1 => "nf-badge--ok", 0 => "nf-badge--warn", 2 => "nf-badge--danger", 3 => "nf-badge--info", _ => "nf-badge--muted" })">
+                                        @item.EstadoTexto
+                                    </span>
+                                    @if (item.Vencido)
+                                    {
+                                        <div class="small text-danger mt-1">Vencido · mora $50</div>
+                                    }
+                                    @if (!string.IsNullOrEmpty(item.MotivoRechazo))
+                                    {
+                                        <div class="small text-muted mt-1">@item.MotivoRechazo</div>
+                                    }
+                                </td>
+                                <td>
+                                    <div class="nf-inline-actions">
+                                        <a class="btn btn-outline-secondary btn-sm" asp-action="DetallePrestamo" asp-route-folio="@item.Folio">Detalle</a>
+                                        @if (item.Estado == 1)
+                                        {
+                                            <form asp-action="PagarPrestamo" method="post">
+                                                <input type="hidden" name="folio" value="@item.Folio" />
+                                                <button type="submit" class="btn btn-primary btn-sm">Pagar</button>
+                                            </form>
+                                        }
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <div class="nf-panel nf-empty">Todavía no tienes préstamos.</div>
+        }
+    </div>
 </div>

@@ -4,25 +4,30 @@
 }
 
 <partial name="_NavUser" />
-<div class="container pb-5" style="max-width: 480px;">
-    <h1 class="h3 mb-3">Editar perfil</h1>
-    <form asp-action="EditarPerfil" method="post">
-        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
-        <div class="mb-3">
-            <label asp-for="Nombre" class="form-label"></label>
-            <input asp-for="Nombre" class="form-control" />
-            <span asp-validation-for="Nombre" class="text-danger"></span>
+<div class="nf-page">
+    <div class="nf-shell">
+        <div class="nf-panel nf-panel--narrow">
+            <p class="nf-kicker">Perfil</p>
+            <h1 class="nf-title">Editar datos</h1>
+            <form asp-action="EditarPerfil" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                <div class="mb-3">
+                    <label asp-for="Nombre" class="form-label"></label>
+                    <input asp-for="Nombre" class="form-control" />
+                    <span asp-validation-for="Nombre" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="ApellidoPaterno" class="form-label"></label>
+                    <input asp-for="ApellidoPaterno" class="form-control" />
+                    <span asp-validation-for="ApellidoPaterno" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="ApellidoMaterno" class="form-label"></label>
+                    <input asp-for="ApellidoMaterno" class="form-control" />
+                    <span asp-validation-for="ApellidoMaterno" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Guardar</button>
+            </form>
         </div>
-        <div class="mb-3">
-            <label asp-for="ApellidoPaterno" class="form-label"></label>
-            <input asp-for="ApellidoPaterno" class="form-control" />
-            <span asp-validation-for="ApellidoPaterno" class="text-danger"></span>
-        </div>
-        <div class="mb-3">
-            <label asp-for="ApellidoMaterno" class="form-label"></label>
-            <input asp-for="ApellidoMaterno" class="form-control" />
-            <span asp-validation-for="ApellidoMaterno" class="text-danger"></span>
-        </div>
-        <button type="submit" class="btn btn-primary w-100">Guardar</button>
-    </form>
+    </div>
 </div>

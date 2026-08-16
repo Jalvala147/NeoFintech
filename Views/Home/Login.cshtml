@@ -4,24 +4,32 @@
 }
 
 <partial name="_NavPublic" />
-<div class="container py-5" style="max-width: 480px;">
-    <h1 class="h3 fw-bold text-primary mb-3">Iniciar sesión</h1>
-    <p class="text-secondary">Accede a tu cuenta de forma segura.</p>
-    <partial name="_Alerts" />
-
-    <form asp-controller="Home" asp-action="Login" method="post">
-        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
-        <div class="mb-3">
-            <label asp-for="NoCuenta" class="form-label"></label>
-            <input asp-for="NoCuenta" class="form-control" placeholder="Número de cuenta" />
-            <span asp-validation-for="NoCuenta" class="text-danger"></span>
+<div class="nf-page nf-page--auth">
+    <div class="nf-shell">
+        <div class="nf-panel nf-panel--narrow nf-reveal">
+            <p class="nf-kicker">Acceso</p>
+            <h1 class="nf-title">Iniciar sesión</h1>
+            <p class="nf-lead">Entra con tu número de cuenta y contraseña.</p>
+            <partial name="_Alerts" />
+            <form asp-controller="Home" asp-action="Login" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                <div class="mb-3">
+                    <label asp-for="NoCuenta" class="form-label"></label>
+                    <input asp-for="NoCuenta" class="form-control" placeholder="Ej. 72235" inputmode="numeric" />
+                    <span asp-validation-for="NoCuenta" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Password" class="form-label"></label>
+                    <input asp-for="Password" class="form-control" placeholder="Tu contraseña" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Entrar</button>
+            </form>
+            <p class="nf-meta mt-3 mb-0">
+                <a asp-controller="Home" asp-action="Recuperar">¿Olvidaste tu contraseña?</a>
+                ·
+                <a asp-controller="Home" asp-action="Register">Solicitar cuenta</a>
+            </p>
         </div>
-        <div class="mb-3">
-            <label asp-for="Password" class="form-label"></label>
-            <input asp-for="Password" class="form-control" placeholder="Contraseña" />
-            <span asp-validation-for="Password" class="text-danger"></span>
-        </div>
-        <button type="submit" class="btn btn-primary w-100">Iniciar sesión</button>
-    </form>
-    <p class="mt-3"><a asp-controller="Home" asp-action="Recuperar">¿Olvidaste tu contraseña?</a></p>
+    </div>
 </div>

@@ -1,29 +1,42 @@
 ﻿@{
     ViewBag.Title = "NeoFintech";
+    ViewBag.HeroNav = true;
 }
 
 <partial name="_NavPublic" />
-<header class="bg-light text-center py-5">
-    <div class="container py-5">
-        <h1 class="display-4 fw-bold text-primary">Bienvenido a NeoFintech</h1>
-        <p class="lead text-secondary mb-4">Banca digital para cuentas, movimientos, préstamos y rifas.</p>
-        <a class="btn btn-primary btn-lg me-2" asp-controller="Home" asp-action="Login">Iniciar sesión</a>
-        <a class="btn btn-outline-primary btn-lg" asp-controller="Home" asp-action="Register">Solicitar cuenta</a>
+<section class="nf-hero">
+    <div class="nf-hero-pattern" aria-hidden="true"></div>
+    <div class="nf-hero-orb" aria-hidden="true"></div>
+    <div class="nf-hero-inner">
+        <p class="nf-kicker nf-reveal" style="color: #d7f3ef;">Banca digital</p>
+        <h1 class="nf-hero-brand nf-reveal nf-reveal-delay-1">NeoFintech</h1>
+        <p class="nf-hero-copy nf-reveal nf-reveal-delay-2">
+            Mueve tu dinero, solicita crédito y sigue cada movimiento con claridad.
+        </p>
+        <div class="nf-hero-cta nf-reveal nf-reveal-delay-3">
+            <a class="btn btn-primary btn-lg" asp-controller="Home" asp-action="Login">Iniciar sesión</a>
+            <a class="btn btn-outline-primary btn-lg" asp-controller="Home" asp-action="Register">Solicitar cuenta</a>
+        </div>
     </div>
-</header>
-<section class="container py-5">
-    <div class="row g-4">
-        <div class="col-md-4">
-            <h2 class="h5">Tu dinero</h2>
-            <p class="text-secondary mb-0">Consulta saldo, deposita, retira y transfiere entre cuentas con comprobante.</p>
-        </div>
-        <div class="col-md-4">
-            <h2 class="h5">Préstamos</h2>
-            <p class="text-secondary mb-0">Solicita, espera aprobación, paga mensualidades y revisa la amortización.</p>
-        </div>
-        <div class="col-md-4">
-            <h2 class="h5">Empleados</h2>
-            <p class="text-secondary mb-0">Aprueban cuentas y créditos, sortean la rifa y la gerencia da de alta personal.</p>
+</section>
+
+<section class="nf-section">
+    <div class="nf-shell">
+        <p class="nf-kicker">Qué puedes hacer</p>
+        <h2>Una cuenta clara para el día a día</h2>
+        <div class="nf-feature-list">
+            <article class="nf-feature">
+                <h3>Tu dinero</h3>
+                <p>Consulta saldo, deposita, retira y transfiere entre cuentas con comprobante.</p>
+            </article>
+            <article class="nf-feature">
+                <h3>Préstamos</h3>
+                <p>Solicita, espera aprobación, paga mensualidades y revisa la amortización.</p>
+            </article>
+            <article class="nf-feature">
+                <h3>Operación</h3>
+                <p>Empleados aprueban solicitudes y gerencia administra el equipo.</p>
+            </article>
         </div>
     </div>
 </section>

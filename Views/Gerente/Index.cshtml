@@ -4,49 +4,64 @@
 }
 
 <partial name="_NavEmployee" />
-<div class="container pb-5">
-    <h1 class="h3 mb-3">Empleados</h1>
-    <partial name="_Alerts" />
-    <a class="btn btn-primary mb-3" asp-action="Registrar">Registrar empleado</a>
-    <table class="table table-striped align-middle">
-        <thead>
-            <tr>
-                <th>Nómina</th>
-                <th>Cuenta</th>
-                <th>Nombre</th>
-                <th>Vacaciones</th>
-                <th>Rol</th>
-                <th>Estado</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>@item.Nomina</td>
-                    <td>@item.NoCuenta</td>
-                    <td>@item.Nombre</td>
-                    <td>
-                        <form asp-action="Vacaciones" method="post" class="d-flex gap-1">
-                            <input type="hidden" name="nomina" value="@item.Nomina" />
-                            <input type="number" name="dias" value="@item.DiasVacaciones" class="form-control form-control-sm" style="width: 80px;" min="0" />
-                            <button type="submit" class="btn btn-outline-primary btn-sm">Guardar</button>
-                        </form>
-                    </td>
-                    <td>@(item.EsGerente ? "Gerente" : "Empleado")</td>
-                    <td>@(item.Activo ? "Activo" : "Inactivo")</td>
-                    <td>
-                        @if (item.Activo)
-                        {
-                            <form asp-action="Desactivar" method="post">
-                                <input type="hidden" name="noCuenta" value="@item.NoCuenta" />
-                                <button type="submit" class="btn btn-outline-danger btn-sm">Desactivar</button>
-                            </form>
-                        }
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+<div class="nf-page">
+    <div class="nf-shell">
+        <p class="nf-kicker">Equipo</p>
+        <h1 class="nf-title mb-3">Empleados</h1>
+        <partial name="_Alerts" />
+        <div class="nf-toolbar">
+            <a class="btn btn-primary" asp-action="Registrar">Registrar empleado</a>
+        </div>
+        <div class="nf-table-wrap">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Nómina</th>
+                        <th>Cuenta</th>
+                        <th>Nombre</th>
+                        <th>Vacaciones</th>
+                        <th>Rol</th>
+                        <th>Estado</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Nomina</td>
+                            <td>@item.NoCuenta</td>
+                            <td>@item.Nombre</td>
+                            <td>
+                                <form asp-action="Vacaciones" method="post" class="nf-inline-actions">
+                                    <input type="hidden" name="nomina" value="@item.Nomina" />
+                                    <input type="number" name="dias" value="@item.DiasVacaciones" class="form-control form-control-sm" style="width: 80px;" min="0" />
+                                    <button type="submit" class="btn btn-outline-primary btn-sm">Guardar</button>
+                                </form>
+                            </td>
+                            <td>
+                                <span class="nf-badge @(item.EsGerente ? "nf-badge--info" : "nf-badge--muted")">
+                                    @(item.EsGerente ? "Gerente" : "Empleado")
+                                </span>
+                            </td>
+                            <td>
+                                <span class="nf-badge @(item.Activo ? "nf-badge--ok" : "nf-badge--danger")">
+                                    @(item.Activo ? "Activo" : "Inactivo")
+                                </span>
+                            </td>
+                            <td>
+                                @if (item.Activo)
+                                {
+                                    <form asp-action="Desactivar" method="post">
+                                        <input type="hidden" name="noCuenta" value="@item.NoCuenta" />
+                                        <button type="submit" class="btn btn-outline-danger btn-sm">Desactivar</button>
+                                    </form>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>

@@ -3,34 +3,25 @@
 }
 
 <partial name="_NavEmployee" />
-<div class="container pb-5">
-    <h1 class="h3 mb-3">Panel de empleado</h1>
-    <div class="row g-3">
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <h2 class="h5">Cuentas pendientes</h2>
-                    <p class="display-6">@ViewBag.PendientesCuentas</p>
-                    <a class="btn btn-primary" asp-action="Cuentas">Revisar cuentas</a>
-                </div>
+<div class="nf-page">
+    <div class="nf-shell">
+        <p class="nf-kicker">Operaciones</p>
+        <h1 class="nf-title mb-4">Panel de empleado</h1>
+        <div class="nf-grid nf-grid-3">
+            <div class="nf-stat">
+                <div class="label">Cuentas pendientes</div>
+                <p class="value">@ViewBag.PendientesCuentas</p>
+                <a class="btn btn-primary btn-sm mt-3" asp-action="Cuentas">Revisar</a>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <h2 class="h5">Préstamos pendientes</h2>
-                    <p class="display-6">@ViewBag.PendientesPrestamos</p>
-                    <a class="btn btn-primary" asp-action="Prestamos">Revisar préstamos</a>
-                </div>
+            <div class="nf-stat">
+                <div class="label">Préstamos pendientes</div>
+                <p class="value">@ViewBag.PendientesPrestamos</p>
+                <a class="btn btn-primary btn-sm mt-3" asp-action="Prestamos">Revisar</a>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <h2 class="h5">Boletos de rifa</h2>
-                    <p class="display-6">@ViewBag.BoletosRifa</p>
-                    <a class="btn btn-primary" asp-action="Rifa">Sortear</a>
-                </div>
+            <div class="nf-stat">
+                <div class="label">Boletos de rifa</div>
+                <p class="value">@ViewBag.BoletosRifa</p>
+                <a class="btn btn-primary btn-sm mt-3" asp-action="Rifa">Sortear</a>
             </div>
         </div>
     </div>

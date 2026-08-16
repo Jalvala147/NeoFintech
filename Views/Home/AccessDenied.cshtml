@@ -3,8 +3,12 @@
 }
 
 <partial name="_NavPublic" />
-<div class="container py-5">
-    <h1 class="text-danger">Acceso denegado</h1>
-    <p>No tienes permiso para ver esta página.</p>
-    <a class="btn btn-primary" asp-controller="Home" asp-action="Login">Ir al inicio de sesión</a>
+<div class="nf-page nf-page--auth">
+    <div class="nf-shell">
+        <div class="nf-panel nf-panel--narrow">
+            <h1 class="nf-title text-danger">Acceso denegado</h1>
+            <p class="nf-lead">No tienes permiso para ver esta página.</p>
+            <a class="btn btn-primary" asp-controller="Home" asp-action="Login">Ir al inicio de sesión</a>
+        </div>
+    </div>
 </div>

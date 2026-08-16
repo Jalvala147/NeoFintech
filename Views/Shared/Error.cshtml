@@ -4,12 +4,16 @@
 }
 
 <partial name="_NavPublic" />
-<div class="container py-5">
-    <h1 class="text-danger">Ocurrió un error</h1>
-    <p>No se pudo completar la solicitud. Vuelve a intentar o inicia sesión de nuevo.</p>
-    @if (Model.ShowRequestId)
-    {
-        <p class="text-secondary">Solicitud: <code>@Model.RequestId</code></p>
-    }
-    <a class="btn btn-primary" asp-controller="Home" asp-action="Index">Ir al inicio</a>
+<div class="nf-page">
+    <div class="nf-shell">
+        <div class="nf-panel nf-panel--narrow">
+            <h1 class="nf-title text-danger">Ocurrió un error</h1>
+            <p class="nf-lead">No se pudo completar la solicitud. Vuelve a intentar o inicia sesión de nuevo.</p>
+            @if (Model.ShowRequestId)
+            {
+                <p class="nf-meta">Solicitud: <code>@Model.RequestId</code></p>
+            }
+            <a class="btn btn-primary" asp-controller="Home" asp-action="Index">Ir al inicio</a>
+        </div>
+    </div>
 </div>

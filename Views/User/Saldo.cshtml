@@ -3,11 +3,18 @@
 }
 
 <partial name="_NavUser" />
-<div class="container pb-5">
-    <h1 class="h3">Saldo disponible</h1>
-    <p class="text-secondary">Cuenta @ViewBag.NoCuenta</p>
-    <p class="display-6">$@(((decimal)ViewBag.Saldo).ToString("N2"))</p>
-    <a class="btn btn-primary" asp-action="Depositar">Depositar</a>
-    <a class="btn btn-outline-primary" asp-action="Retirar">Retirar</a>
-    <a class="btn btn-outline-primary" asp-action="Transferir">Transferir</a>
+<div class="nf-page">
+    <div class="nf-shell">
+        <p class="nf-kicker">Cuenta @ViewBag.NoCuenta</p>
+        <h1 class="nf-title mb-3">Saldo disponible</h1>
+        <div class="nf-balance">
+            <div class="label">Disponible ahora</div>
+            <p class="value">$@(((decimal)ViewBag.Saldo).ToString("N2"))</p>
+            <div class="actions">
+                <a class="btn btn-primary" asp-action="Depositar">Depositar</a>
+                <a class="btn btn-outline-primary" asp-action="Retirar">Retirar</a>
+                <a class="btn btn-outline-primary" asp-action="Transferir">Transferir</a>
+            </div>
+        </div>
+    </div>
 </div>

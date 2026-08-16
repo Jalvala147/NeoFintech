@@ -4,34 +4,43 @@
 }
 
 <partial name="_NavUser" />
-<div class="container pb-5">
-    <h1 class="h3 mb-3">Historial de préstamos</h1>
-    @if (!Model.Any())
-    {
-        <p class="text-secondary">Aún no tienes préstamos.</p>
-    }
-    else
-    {
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Folio</th>
-                    <th>Cantidad</th>
-                    <th>Fecha de expedición</th>
-                    <th>Estado</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>@item.Folio</td>
-                        <td>$@item.Cantidad.ToString("N2")</td>
-                        <td>@item.FechaExpedicion.ToString("dd/MM/yyyy")</td>
-                        <td>@item.EstadoTexto</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    }
+<div class="nf-page">
+    <div class="nf-shell">
+        <p class="nf-kicker">Crédito</p>
+        <h1 class="nf-title mb-3">Historial de préstamos</h1>
+        @if (!Model.Any())
+        {
+            <div class="nf-panel nf-empty">Aún no tienes préstamos.</div>
+        }
+        else
+        {
+            <div class="nf-table-wrap">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Folio</th>
+                            <th>Cantidad</th>
+                            <th>Fecha</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Folio</td>
+                                <td>$@item.Cantidad.ToString("N2")</td>
+                                <td>@item.FechaExpedicion.ToString("dd/MM/yyyy")</td>
+                                <td>
+                                    <span class="nf-badge @(item.Estado switch { 1 => "nf-badge--ok", 0 => "nf-badge--warn", 2 => "nf-badge--danger", 3 => "nf-badge--info", _ => "nf-badge--muted" })">
+                                        @item.EstadoTexto
+                                    </span>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
 </div>

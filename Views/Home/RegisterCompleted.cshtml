@@ -3,9 +3,17 @@
 }
 
 <partial name="_NavPublic" />
-<div class="container py-5" style="max-width: 560px;">
-    <h1 class="h3 text-primary">Registro completado</h1>
-    <p>Tu solicitud fue enviada. Guarda tu número de cuenta; lo necesitarás para iniciar sesión cuando un empleado la apruebe.</p>
-    <p class="fs-4">Número de cuenta: <strong>@ViewBag.NoCuenta</strong></p>
-    <a class="btn btn-primary" asp-controller="Home" asp-action="Login">Ir a iniciar sesión</a>
+<div class="nf-page nf-page--auth">
+    <div class="nf-shell">
+        <div class="nf-panel nf-panel--narrow nf-reveal">
+            <p class="nf-kicker">Listo</p>
+            <h1 class="nf-title">Solicitud enviada</h1>
+            <p class="nf-lead">Guarda tu número de cuenta. Lo necesitarás cuando un empleado la apruebe.</p>
+            <div class="nf-stat mb-3">
+                <div class="label">Número de cuenta</div>
+                <p class="value">@ViewBag.NoCuenta</p>
+            </div>
+            <a class="btn btn-primary w-100" asp-controller="Home" asp-action="Login">Ir a iniciar sesión</a>
+        </div>
+    </div>
 </div>

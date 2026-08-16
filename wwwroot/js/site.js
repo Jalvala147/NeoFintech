@@ -1,4 +1,14 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
-
-// Write your JavaScript code.
+﻿document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll("[data-nf-toggle]").forEach(function (button) {
+    button.addEventListener("click", function () {
+      var targetId = button.getAttribute("data-nf-toggle");
+      var panel = document.getElementById(targetId);
+      if (!panel) {
+        return;
+      }
+      panel.classList.toggle("is-open");
+      var expanded = panel.classList.contains("is-open");
+      button.setAttribute("aria-expanded", expanded ? "true" : "false");
+    });
+  });
+});
