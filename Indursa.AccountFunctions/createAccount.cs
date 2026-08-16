@@ -1,32 +1,34 @@
-using System;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using ProyectoIndursa.Models;
+using ProyectoIndursa.Helpers;
 using ProyectoIndursa.IndursaContext;
+using ProyectoIndursa.Models;
 
-namespace ProyectoIndursa.AccountFunctions
+namespace ProyectoIndursa.AccountFunctions;
+
+public partial class Account
 {
-    public partial class Account
+    public static int CreateAccount(IndursaDB db, Usuario user, string password)
     {
-        public static void CreateAccount(Usuario user)
+        if (!CheckCurp(db, user.Curp))
         {
-            
-            var db=new IndursaDB();
-            int newID=Account.NewID();
-            Cuentum cuenta=new Cuentum
-            {
-                NoCuenta=newID,
-                TipoCuenta=1,
-            };
-            InfoCuentum infocuenta=new InfoCuentum
-            {
-                NoCuenta=newID
-            };
-            user.NoCuenta=newID;
-            db.Cuenta.Add(cuenta);
-            db.InfoCuenta.Add(infocuenta);
-            db.Usuarios.Add(user);
-            db.SaveChanges();
+            throw new InvalidOperationException("La CURP ya está registrada.");
         }
+
+        var newId = NewID(db);
+        var cuenta = new Cuentum
+        {
+            NoCuenta = newId,
+            TipoCuenta = 1,
+            Password = PasswordHelper.Hash(password)
+        };
+        var infocuenta = new InfoCuentum
+        {
+            NoCuenta = newId
+        };
+        user.NoCuenta = newId;
+        db.Cuenta.Add(cuenta);
+        db.InfoCuenta.Add(infocuenta);
+        db.Usuarios.Add(user);
+        db.SaveChanges();
+        return newId;
     }
 }

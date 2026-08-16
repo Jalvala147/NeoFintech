@@ -1,62 +1,182 @@
 ﻿using System.Diagnostics;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ProyectoIndursa.Models;
-using ProyectoIndursa.IndursaContext;
 using ProyectoIndursa.AccountFunctions;
+using ProyectoIndursa.Helpers;
+using ProyectoIndursa.IndursaContext;
+using ProyectoIndursa.Models;
 
-namespace ProyectoIndursa.Controllers
-{
+namespace ProyectoIndursa.Controllers;
+
 public class HomeController : Controller
 {
-    Random clave=new Random();
     private readonly ILogger<HomeController> _logger;
+    private readonly IndursaDB _db;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(ILogger<HomeController> logger, IndursaDB db)
     {
         _logger = logger;
+        _db = db;
     }
 
     public IActionResult Index()
     {
         return View();
     }
+
     [HttpGet]
     public IActionResult Login()
     {
-        return View();
+        if (User.Identity?.IsAuthenticated == true)
+        {
+            return RedirectAfterLogin();
+        }
+
+        return View(new LoginViewModel());
     }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Login(LoginViewModel model)
+    {
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+
+        var cuenta = _db.Cuenta.FirstOrDefault(s => s.NoCuenta == model.NoCuenta);
+        if (cuenta == null || !PasswordHelper.Verify(model.Password, cuenta.Password))
+        {
+            ModelState.AddModelError(string.Empty, "Número de cuenta o contraseña incorrectos.");
+            return View(model);
+        }
+
+        if (cuenta.TipoCuenta == 1)
+        {
+            ModelState.AddModelError(string.Empty, "Tu cuenta aún está pendiente de aprobación.");
+            return View(model);
+        }
+
+        if (cuenta.TipoCuenta == 3)
+        {
+            ModelState.AddModelError(string.Empty, "Tu solicitud de cuenta fue rechazada.");
+            return View(model);
+        }
+
+        if (cuenta.TipoCuenta != 2)
+        {
+            ModelState.AddModelError(string.Empty, "No puedes iniciar sesión con esta cuenta.");
+            return View(model);
+        }
+
+        if (!PasswordHelper.IsHashed(cuenta.Password))
+        {
+            cuenta.Password = PasswordHelper.Hash(model.Password);
+            _db.SaveChanges();
+        }
+
+        var claims = new List<Claim>
+        {
+            new(ClaimTypes.NameIdentifier, cuenta.NoCuenta.ToString()),
+            new(ClaimTypes.Role, "Usuario")
+        };
+
+        var empleado = _db.Empleados.FirstOrDefault(e => e.NoCuenta == cuenta.NoCuenta);
+        if (empleado != null)
+        {
+            claims.Add(new Claim(ClaimTypes.Role, "Empleado"));
+            if (_db.Gerentes.Any(g => g.Nomina == empleado.Nomina))
+            {
+                claims.Add(new Claim(ClaimTypes.Role, "Gerente"));
+            }
+        }
+
+        var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));
+
+        if (empleado != null)
+        {
+            return RedirectToAction("Index", "Employee");
+        }
+
+        return RedirectToAction("Index", "User");
+    }
+
+    [HttpGet]
     public IActionResult Register()
     {
-        return View();
+        return View(new RegisterViewModel());
     }
-    
+
     [HttpPost]
-    public IActionResult RegisterCompleted(string Curp,string Nombre,string ApellidoPaterno,string ApellidoMaterno,DateTime FechaDeNacimiento)
+    [ValidateAntiForgeryToken]
+    public IActionResult Register(RegisterViewModel model)
     {
-        if(ModelState.IsValid)
+        if (!ModelState.IsValid)
         {
-        Usuario user=new Usuario
+            return View(model);
+        }
+
+        if (model.FechaDeNacimiento is null || model.FechaDeNacimiento.Value.Year < 1900)
         {
-            Curp=Curp,
-            Nombre=Nombre,
-            ApellidoPaterno=ApellidoPaterno,
-            ApellidoMaterno=ApellidoMaterno,
-            FechaDeNacimiento=FechaDeNacimiento
+            ModelState.AddModelError(nameof(model.FechaDeNacimiento), "Ingresa una fecha de nacimiento válida.");
+            return View(model);
+        }
+
+        var user = new Usuario
+        {
+            Curp = model.Curp.Trim().ToUpperInvariant(),
+            Nombre = model.Nombre.Trim(),
+            ApellidoPaterno = model.ApellidoPaterno.Trim(),
+            ApellidoMaterno = model.ApellidoMaterno.Trim(),
+            FechaDeNacimiento = model.FechaDeNacimiento.Value
         };
-        Account.CreateAccount(user);
-        return View();
-        }
-        else
+
+        if (!Account.CheckCurp(_db, user.Curp))
         {
-            return View("Register");
+            ModelState.AddModelError(nameof(model.Curp), "Esta CURP ya está registrada.");
+            return View(model);
         }
+
+        var noCuenta = Account.CreateAccount(_db, user, model.Password);
+        TempData["NoCuenta"] = noCuenta;
+        return RedirectToAction(nameof(RegisterCompleted));
     }
-    
+
+    [HttpGet]
+    public IActionResult RegisterCompleted()
+    {
+        if (TempData["NoCuenta"] is null)
+        {
+            return RedirectToAction(nameof(Register));
+        }
+
+        ViewBag.NoCuenta = TempData["NoCuenta"];
+        return View();
+    }
+
+    [AllowAnonymous]
+    public IActionResult AccessDenied()
+    {
+        return View();
+    }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
-}
+
+    private IActionResult RedirectAfterLogin()
+    {
+        if (User.IsInRole("Empleado") || User.IsInRole("Gerente"))
+        {
+            return RedirectToAction("Index", "Employee");
+        }
+
+        return RedirectToAction("Index", "User");
+    }
 }

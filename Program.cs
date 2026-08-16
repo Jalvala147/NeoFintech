@@ -1,25 +1,39 @@
-//No toquen nada de aquí ヽ(゜▽゜　)
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.EntityFrameworkCore;
+using ProyectoIndursa.Data;
+using ProyectoIndursa.IndursaContext;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddRazorPages();
-
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<IndursaDB>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("Indursa") ?? "Data Source=Indursa.db"));
+
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddCookie(options=>
+    .AddCookie(options =>
     {
-        options.LoginPath="/Home/Login";
-        options.Cookie.Name="Token";
+        options.LoginPath = "/Home/Login";
+        options.AccessDeniedPath = "/Home/AccessDenied";
+        options.Cookie.Name = "NeoFintech.Auth";
+        options.Cookie.HttpOnly = true;
+        options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+        options.Cookie.SameSite = SameSiteMode.Lax;
+        options.ExpireTimeSpan = TimeSpan.FromHours(8);
+        options.SlidingExpiration = true;
     });
+builder.Services.AddAuthorization();
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<IndursaDB>();
+    DbInitializer.Seed(db);
+}
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
@@ -27,10 +41,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
-app.UseAuthorization();
 app.UseAuthentication();
-app.MapRazorPages();
+app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
