@@ -122,7 +122,7 @@ public class UserController : Controller
             return RedirectToAction(nameof(Prestamo));
         }
 
-        var folio = _db.Prestamos.Select(p => p.Folio).DefaultIfEmpty(100000).Max() + 1;
+        var folio = _db.Prestamos.Select(p => p.Folio).ToList().DefaultIfEmpty(100000).Max() + 1;
         _db.Prestamos.Add(new Prestamo
         {
             Folio = folio,
@@ -170,7 +170,7 @@ public class UserController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> SignOut()
+    public async Task<IActionResult> Logout()
     {
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
         return RedirectToAction("Login", "Home");
@@ -178,7 +178,7 @@ public class UserController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public Task<IActionResult> SingOut() => SignOut();
+    public Task<IActionResult> SingOut() => Logout();
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
