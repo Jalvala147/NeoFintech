@@ -1,26 +1,20 @@
 @{
-    ViewData["Title"] = "Usuario";
+    ViewBag.Title = "Inicio";
 }
-<div>
-	<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-		<div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Indursa</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div>
-		<ul class="navbar-nav flex-grow-1">
-			<img src="image.png" alt="" class="logo">
-			<li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Saldo">Saldo</a></li>
-			<li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Prestamo">Prestamo</a></li>
-			<li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Historial">Historial de Prestamos</a></li>
-			<li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Perfil">Información de Cuenta</a></li>
-			@{
-				Html.BeginForm("SingOut","User");
-				<li class="nav-item"><button type="submit" name="button">Cerrar Sesión</button></li>
-				Html.EndForm();
-			}
-		</ul>
-	</nav>
-	</div>
+
+<partial name="_NavUser" />
+<div class="container pb-5">
+    <h1 class="h3">Hola, @ViewBag.Nombre</h1>
+    <p class="text-secondary">Cuenta @ViewBag.NoCuenta</p>
+    <div class="row g-3">
+        <div class="col-md-4">
+            <a class="btn btn-outline-primary w-100" asp-action="Saldo">Ver saldo</a>
+        </div>
+        <div class="col-md-4">
+            <a class="btn btn-outline-primary w-100" asp-action="Prestamo">Préstamos</a>
+        </div>
+        <div class="col-md-4">
+            <a class="btn btn-outline-primary w-100" asp-action="Perfil">Perfil</a>
+        </div>
+    </div>
+</div>

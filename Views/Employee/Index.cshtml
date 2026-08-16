@@ -1,20 +1,28 @@
 @{
-    ViewData["Title"] = "Usuario";
+    ViewBag.Title = "Empleado";
 }
-<div>
-	<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-		<div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Indursa</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div>
-		<ul class="navbar-nav flex-grow-1">
-			<img src="image.png" alt="" class="logo">
-			<a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="Index">Inicio</a>
-			 <a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="Prestamos">Prestamos</a>
-			<a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="Cuentas">Cuentas</a>
-		</ul>
-	</nav>
+
+<partial name="_NavEmployee" />
+<div class="container pb-5">
+    <h1 class="h3 mb-3">Panel de empleado</h1>
+    <div class="row g-3">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="h5">Cuentas pendientes</h2>
+                    <p class="display-6">@ViewBag.PendientesCuentas</p>
+                    <a class="btn btn-primary" asp-action="Cuentas">Revisar cuentas</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="h5">Préstamos pendientes</h2>
+                    <p class="display-6">@ViewBag.PendientesPrestamos</p>
+                    <a class="btn btn-primary" asp-action="Prestamos">Revisar préstamos</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

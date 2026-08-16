@@ -14,7 +14,7 @@ public partial class Cuentum
     [Column("No_Cuenta", TypeName = "INT")]
     public int NoCuenta { get; set; }
 
-    [Column(TypeName = "varchar(16)")]
+    [Column(TypeName = "varchar(200)")]
     public string Password { get; set; } = null!;
 
     [Column("Tipo_Cuenta", TypeName = "tinyint")]

@@ -1,48 +1,37 @@
+@model IEnumerable<ProyectoIndursa.Models.PrestamoListaItem>
 @{
-    ViewData["Title"] = "Usuario";
+    ViewBag.Title = "Historial";
 }
-<div>
-	<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-		<div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Indursa</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div>
-		<ul class="navbar-nav flex-grow-1">
-			<img src="image.png" alt="" class="logo">
-			<li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Saldo">Saldo</a></li>
-			<li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Prestamo">Prestamo</a></li>
-			<li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Historial">Historial de Prestamos</a></li>
-			<li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Perfil">Información de Cuenta</a></li>
-		</ul>
-	</nav>
-	@{
-		var db=new ProyectoIndursa.IndursaContext.IndursaDB();
-		var folio = from s in db.DatosPrestamos
-					where
-					s.SolicitadoPor == Int32.Parse(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value)
-					select s;
-		<table>
-			<thead>
-				<tr>
-					<td>Folio</td>
-					<td>Cantidad</td>
-					<td>Fecha Expedicion</td>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-			@foreach (var item in folio)
-			{
-				var cant=db.Prestamos.First(s=>s.Folio==item.Folio);
-				<td>@item.Folio</td>
-				<td>@cant.Cantidad</td>
-				<td>@item.FechaExpedicion</td>
-			}
-				</tr>
-			</tbody>
-		</table>
-	}
-	</div>
+
+<partial name="_NavUser" />
+<div class="container pb-5">
+    <h1 class="h3 mb-3">Historial de préstamos</h1>
+    @if (!Model.Any())
+    {
+        <p class="text-secondary">Aún no tienes préstamos.</p>
+    }
+    else
+    {
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Folio</th>
+                    <th>Cantidad</th>
+                    <th>Fecha de expedición</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Folio</td>
+                        <td>$@item.Cantidad.ToString("N2")</td>
+                        <td>@item.FechaExpedicion.ToString("dd/MM/yyyy")</td>
+                        <td>@item.EstadoTexto</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

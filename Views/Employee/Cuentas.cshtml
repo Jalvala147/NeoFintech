@@ -1,90 +1,56 @@
+@model IEnumerable<ProyectoIndursa.Models.CuentaListaItem>
 @{
-    ViewData["Title"] = "Usuario";
-	
+    ViewBag.Title = "Cuentas";
 }
-<div>
-	<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-		<div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Indursa</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div>
-		<ul class="navbar-nav flex-grow-1">
-			<img src="image.png" alt="" class="logo">
-			<a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="Index">Inicio</a>
-			 <a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="Prestamos">Prestamos</a>
-			<a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="Cuentas">Cuentas</a>
-		</ul>
-	</nav>
 
-	<table>
-		<thead>
-			<tr>
-				<td>Numero de Cuenta</td>
-				<td>Nombre(s)</td>
-				<td>Apellido Paterno</td>
-				<td>Apellido Materno</td>
-				<td>CURP</td>
-				<td>Estado de cuenta</td>
-			</tr>
-		</thead>
-		<tbody>
-			@{
-				ProyectoIndursa.IndursaContext.IndursaDB db=new ProyectoIndursa.IndursaContext.IndursaDB();
-				foreach (var item in db.Usuarios)
-				{
-					<tr>
-						<td>
-							@item.NoCuenta
-						</td>
-						<td>
-							@item.Nombre
-						</td>
-						<td>
-							@item.ApellidoPaterno
-						</td>
-						<td>
-							@item.ApellidoMaterno
-						</td>
-						<td>
-							@item.Curp
-						</td>
-							@{
-								var status = from s in db.Cuenta where s.NoCuenta == item.NoCuenta select s.TipoCuenta;
-								if(status.FirstOrDefault()==1)
-								{
-									<td>
-										Pendiente
-									</td>
-										Html.BeginForm("AcceptAccount","Employee");
-										<td>
-											<button type="submit" name="button" value=@item.NoCuenta>Aceptar Solicitud</button>
-										</td>
-										Html.EndForm();
-										Html.BeginForm("RejectAccount","Employee");
-										<td>
-											<button type="submit" name="button" value=@item.NoCuenta>Rechazar Solicitud</button>
-										</td>
-										Html.EndForm();
-								}
-								else if(status.FirstOrDefault()==2)
-								{
-									<td>
-										Aceptada
-									</td>
-								}
-								else
-								{
-									<td>
-										Rechazada
-									</td>
-								}
-							}
-					</tr>
-				}
-			}
-		</tbody>
-	</table>
+<partial name="_NavEmployee" />
+<div class="container pb-5">
+    <h1 class="h3 mb-3">Solicitudes de cuenta</h1>
+    @if (TempData["Ok"] is string ok)
+    {
+        <div class="alert alert-success">@ok</div>
+    }
+    @if (TempData["Error"] is string error)
+    {
+        <div class="alert alert-danger">@error</div>
+    }
+    <table class="table table-striped align-middle">
+        <thead>
+            <tr>
+                <th>Número de cuenta</th>
+                <th>Nombre(s)</th>
+                <th>Apellido paterno</th>
+                <th>Apellido materno</th>
+                <th>CURP</th>
+                <th>Estado</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.NoCuenta</td>
+                    <td>@item.Nombre</td>
+                    <td>@item.ApellidoPaterno</td>
+                    <td>@item.ApellidoMaterno</td>
+                    <td>@item.Curp</td>
+                    <td>@item.EstadoTexto</td>
+                    <td>
+                        @if (item.TipoCuenta == 1)
+                        {
+                            <form asp-action="AcceptAccount" method="post" class="d-inline">
+                                <input type="hidden" name="noCuenta" value="@item.NoCuenta" />
+                                <button type="submit" class="btn btn-success btn-sm">Aceptar</button>
+                            </form>
+                            <form asp-action="RejectAccount" method="post" class="d-inline">
+                                <input type="hidden" name="noCuenta" value="@item.NoCuenta" />
+                                <button type="submit" class="btn btn-outline-danger btn-sm">Rechazar</button>
+                            </form>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>

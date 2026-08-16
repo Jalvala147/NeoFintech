@@ -1,0 +1,37 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm mb-4">
+    <div class="container">
+        <a class="navbar-brand fw-bold" asp-controller="User" asp-action="Index">
+            <img src="~/images/logo.png" alt="NeoFintech" class="logo" />
+            NeoFintech
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#userNav"
+            aria-controls="userNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="userNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="User" asp-action="Saldo">Saldo</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="User" asp-action="Prestamo">Préstamo</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="User" asp-action="Historial">Historial</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="User" asp-action="Perfil">Perfil</a>
+                </li>
+                @if (User.IsInRole("Empleado") || User.IsInRole("Gerente"))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Employee" asp-action="Index">Panel empleado</a>
+                    </li>
+                }
+            </ul>
+            <form asp-controller="User" asp-action="Logout" method="post">
+                <button type="submit" class="btn btn-outline-secondary btn-sm">Cerrar sesión</button>
+            </form>
+        </div>
+    </div>
+</nav>
