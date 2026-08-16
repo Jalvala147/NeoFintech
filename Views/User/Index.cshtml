@@ -1,3 +1,4 @@
+@model IEnumerable<ProyectoIndursa.Models.Notificacion>
 @{
     ViewBag.Title = "Inicio";
 }
@@ -5,16 +6,28 @@
 <partial name="_NavUser" />
 <div class="container pb-5">
     <h1 class="h3">Hola, @ViewBag.Nombre</h1>
-    <p class="text-secondary">Cuenta @ViewBag.NoCuenta</p>
+    <p class="text-secondary">Cuenta @ViewBag.NoCuenta · Saldo $@(((decimal)ViewBag.Saldo).ToString("N2"))</p>
+    <partial name="_Alerts" />
+
+    @if (Model.Any())
+    {
+        <div class="alert alert-info">
+            <strong>Avisos</strong>
+            <ul class="mb-0">
+                @foreach (var aviso in Model)
+                {
+                    <li>@aviso.Mensaje</li>
+                }
+            </ul>
+        </div>
+    }
+
     <div class="row g-3">
-        <div class="col-md-4">
-            <a class="btn btn-outline-primary w-100" asp-action="Saldo">Ver saldo</a>
-        </div>
-        <div class="col-md-4">
-            <a class="btn btn-outline-primary w-100" asp-action="Prestamo">Préstamos</a>
-        </div>
-        <div class="col-md-4">
-            <a class="btn btn-outline-primary w-100" asp-action="Perfil">Perfil</a>
-        </div>
+        <div class="col-md-3"><a class="btn btn-outline-primary w-100" asp-action="Depositar">Depositar</a></div>
+        <div class="col-md-3"><a class="btn btn-outline-primary w-100" asp-action="Retirar">Retirar</a></div>
+        <div class="col-md-3"><a class="btn btn-outline-primary w-100" asp-action="Transferir">Transferir</a></div>
+        <div class="col-md-3"><a class="btn btn-outline-primary w-100" asp-action="Movimientos">Movimientos</a></div>
+        <div class="col-md-3"><a class="btn btn-outline-primary w-100" asp-action="Prestamo">Préstamos</a></div>
+        <div class="col-md-3"><a class="btn btn-outline-primary w-100" asp-action="Perfil">Perfil</a></div>
     </div>
 </div>

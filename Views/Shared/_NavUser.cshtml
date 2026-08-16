@@ -10,23 +10,16 @@
         </button>
         <div class="collapse navbar-collapse" id="userNav">
             <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="nav-link" asp-controller="User" asp-action="Saldo">Saldo</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" asp-controller="User" asp-action="Prestamo">Préstamo</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" asp-controller="User" asp-action="Historial">Historial</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" asp-controller="User" asp-action="Perfil">Perfil</a>
-                </li>
+                <li class="nav-item"><a class="nav-link" asp-controller="User" asp-action="Saldo">Saldo</a></li>
+                <li class="nav-item"><a class="nav-link" asp-controller="User" asp-action="Depositar">Depositar</a></li>
+                <li class="nav-item"><a class="nav-link" asp-controller="User" asp-action="Retirar">Retirar</a></li>
+                <li class="nav-item"><a class="nav-link" asp-controller="User" asp-action="Transferir">Transferir</a></li>
+                <li class="nav-item"><a class="nav-link" asp-controller="User" asp-action="Movimientos">Movimientos</a></li>
+                <li class="nav-item"><a class="nav-link" asp-controller="User" asp-action="Prestamo">Préstamos</a></li>
+                <li class="nav-item"><a class="nav-link" asp-controller="User" asp-action="Perfil">Perfil</a></li>
                 @if (User.IsInRole("Empleado") || User.IsInRole("Gerente"))
                 {
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="Employee" asp-action="Index">Panel empleado</a>
-                    </li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Employee" asp-action="Index">Empleado</a></li>
                 }
             </ul>
             <form asp-controller="User" asp-action="Logout" method="post">

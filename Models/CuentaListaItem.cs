@@ -8,6 +8,7 @@ public class CuentaListaItem
     public string ApellidoMaterno { get; set; } = string.Empty;
     public string Curp { get; set; } = string.Empty;
     public int TipoCuenta { get; set; }
+    public string? MotivoRechazo { get; set; }
 
     public string EstadoTexto => TipoCuenta switch
     {

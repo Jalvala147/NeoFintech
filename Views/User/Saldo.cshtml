@@ -7,4 +7,7 @@
     <h1 class="h3">Saldo disponible</h1>
     <p class="text-secondary">Cuenta @ViewBag.NoCuenta</p>
     <p class="display-6">$@(((decimal)ViewBag.Saldo).ToString("N2"))</p>
+    <a class="btn btn-primary" asp-action="Depositar">Depositar</a>
+    <a class="btn btn-outline-primary" asp-action="Retirar">Retirar</a>
+    <a class="btn btn-outline-primary" asp-action="Transferir">Transferir</a>
 </div>

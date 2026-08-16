@@ -2,11 +2,13 @@
 @{
     ViewBag.Title = "Perfil";
     var usuario = ViewBag.Usuario as Usuario;
+    var boletos = ViewBag.Boletos as IEnumerable<Rifa> ?? Enumerable.Empty<Rifa>();
 }
 
 <partial name="_NavUser" />
-<div class="container pb-5" style="max-width: 640px;">
+<div class="container pb-5" style="max-width: 720px;">
     <h1 class="h3 mb-3">Información de cuenta</h1>
+    <partial name="_Alerts" />
     @if (usuario == null)
     {
         <p class="text-secondary">No se encontraron datos del usuario.</p>
@@ -25,5 +27,22 @@
             <dt class="col-sm-4">Saldo</dt>
             <dd class="col-sm-8">$@(((decimal)ViewBag.Saldo).ToString("N2"))</dd>
         </dl>
+        <a class="btn btn-primary" asp-action="EditarPerfil">Editar perfil</a>
+        <a class="btn btn-outline-primary" asp-action="CambiarPassword">Cambiar contraseña</a>
+    }
+
+    <h2 class="h5 mt-4">Boletos de rifa</h2>
+    @if (!boletos.Any())
+    {
+        <p class="text-secondary">Aún no tienes boletos. Deposita $500 o más para participar.</p>
+    }
+    else
+    {
+        <ul>
+            @foreach (var boleto in boletos)
+            {
+                <li>Boleto @boleto.NoBoleto · @boleto.FechaBoleto.ToString("dd/MM/yyyy") @(boleto.Ganador == 1 ? "· Ganador" : "")</li>
+            }
+        </ul>
     }
 </div>

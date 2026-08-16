@@ -6,6 +6,7 @@
 <partial name="_NavUser" />
 <div class="container pb-5" style="max-width: 480px;">
     <h1 class="h3 mb-3">Solicitar préstamo</h1>
+    <p class="text-secondary">Puedes solicitar entre $1,000 y $@(((decimal)ViewBag.Maximo).ToString("N2")). Interés del 10% a 12 meses.</p>
     <form asp-action="SolicitarPrestamo" method="post">
         <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
         <div class="mb-3">

@@ -1,0 +1,18 @@
+@model ProyectoIndursa.Models.OperacionMontoViewModel
+@{
+    ViewBag.Title = "Retirar";
+}
+
+<partial name="_NavUser" />
+<div class="container pb-5" style="max-width: 480px;">
+    <h1 class="h3 mb-3">Retirar</h1>
+    <form asp-action="Retirar" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+        <div class="mb-3">
+            <label asp-for="Monto" class="form-label"></label>
+            <input asp-for="Monto" class="form-control" type="number" min="1" step="0.01" />
+            <span asp-validation-for="Monto" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Retirar</button>
+    </form>
+</div>

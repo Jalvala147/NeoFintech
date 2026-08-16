@@ -11,6 +11,8 @@ public static class DbInitializer
 
     public static void Seed(IndursaDB db)
     {
+        Schema.Ensure(db);
+
         if (!db.Cuenta.Any(c => c.NoCuenta == EmpleadoNoCuenta))
         {
             db.Cuenta.Add(new Cuentum
@@ -45,5 +47,17 @@ public static class DbInitializer
         }
 
         db.SaveChanges();
+
+        if (!db.Gerentes.Any())
+        {
+            var empleado = db.Empleados.First();
+            empleado.DiasVacaciones = 12;
+            db.Gerentes.Add(new Gerente
+            {
+                Nomina = empleado.Nomina,
+                DiasVacaciones = 12
+            });
+            db.SaveChanges();
+        }
     }
 }

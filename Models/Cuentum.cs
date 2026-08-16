@@ -20,6 +20,9 @@ public partial class Cuentum
     [Column("Tipo_Cuenta", TypeName = "tinyint")]
     public int TipoCuenta { get; set; }
 
+    [Column("Motivo_Rechazo")]
+    public string? MotivoRechazo { get; set; }
+
     [InverseProperty("SolicitadoPorNavigation")]
     public virtual ICollection<DatosPrestamo> DatosPrestamos { get; } = new List<DatosPrestamo>();
 

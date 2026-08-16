@@ -6,14 +6,7 @@
 <partial name="_NavEmployee" />
 <div class="container pb-5">
     <h1 class="h3 mb-3">Solicitudes de cuenta</h1>
-    @if (TempData["Ok"] is string ok)
-    {
-        <div class="alert alert-success">@ok</div>
-    }
-    @if (TempData["Error"] is string error)
-    {
-        <div class="alert alert-danger">@error</div>
-    }
+    <partial name="_Alerts" />
     <table class="table table-striped align-middle">
         <thead>
             <tr>
@@ -35,7 +28,13 @@
                     <td>@item.ApellidoPaterno</td>
                     <td>@item.ApellidoMaterno</td>
                     <td>@item.Curp</td>
-                    <td>@item.EstadoTexto</td>
+                    <td>
+                        @item.EstadoTexto
+                        @if (!string.IsNullOrEmpty(item.MotivoRechazo))
+                        {
+                            <div class="small text-muted">@item.MotivoRechazo</div>
+                        }
+                    </td>
                     <td>
                         @if (item.TipoCuenta == 1)
                         {
@@ -43,8 +42,9 @@
                                 <input type="hidden" name="noCuenta" value="@item.NoCuenta" />
                                 <button type="submit" class="btn btn-success btn-sm">Aceptar</button>
                             </form>
-                            <form asp-action="RejectAccount" method="post" class="d-inline">
+                            <form asp-action="RejectAccount" method="post" class="d-inline-block mt-1">
                                 <input type="hidden" name="noCuenta" value="@item.NoCuenta" />
+                                <input name="motivo" class="form-control form-control-sm d-inline-block" style="width: 160px;" placeholder="Motivo" required />
                                 <button type="submit" class="btn btn-outline-danger btn-sm">Rechazar</button>
                             </form>
                         }

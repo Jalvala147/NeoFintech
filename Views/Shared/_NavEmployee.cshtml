@@ -10,18 +10,15 @@
         </button>
         <div class="collapse navbar-collapse" id="employeeNav">
             <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="nav-link" asp-controller="Employee" asp-action="Index">Inicio</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" asp-controller="Employee" asp-action="Cuentas">Cuentas</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" asp-controller="Employee" asp-action="Prestamos">Préstamos</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" asp-controller="User" asp-action="Index">Mi cuenta</a>
-                </li>
+                <li class="nav-item"><a class="nav-link" asp-controller="Employee" asp-action="Index">Inicio</a></li>
+                <li class="nav-item"><a class="nav-link" asp-controller="Employee" asp-action="Cuentas">Cuentas</a></li>
+                <li class="nav-item"><a class="nav-link" asp-controller="Employee" asp-action="Prestamos">Préstamos</a></li>
+                <li class="nav-item"><a class="nav-link" asp-controller="Employee" asp-action="Rifa">Rifa</a></li>
+                @if (User.IsInRole("Gerente"))
+                {
+                    <li class="nav-item"><a class="nav-link" asp-controller="Gerente" asp-action="Index">Gerencia</a></li>
+                }
+                <li class="nav-item"><a class="nav-link" asp-controller="User" asp-action="Index">Mi cuenta</a></li>
             </ul>
             <form asp-controller="User" asp-action="Logout" method="post">
                 <button type="submit" class="btn btn-outline-secondary btn-sm">Cerrar sesión</button>

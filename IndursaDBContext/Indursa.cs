@@ -34,6 +34,10 @@ public partial class IndursaDB : DbContext
 
     public virtual DbSet<Usuario> Usuarios { get; set; }
 
+    public virtual DbSet<Movimiento> Movimientos { get; set; }
+
+    public virtual DbSet<Notificacion> Notificaciones { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if (!optionsBuilder.IsConfigured)

@@ -1,0 +1,35 @@
+@model IEnumerable<ProyectoIndursa.Models.AmortizacionItem>
+@{
+    ViewBag.Title = "Detalle de préstamo";
+    var prestamo = (ProyectoIndursa.Models.PrestamoListaItem)ViewBag.Prestamo;
+}
+
+<partial name="_NavUser" />
+<div class="container pb-5">
+    <h1 class="h3 mb-3">Préstamo @prestamo.Folio</h1>
+    <p>Monto $@prestamo.Cantidad.ToString("N2") · Mensualidad $@prestamo.Mensualidad.ToString("N2") · Límite @prestamo.FechaLimite.ToString("dd/MM/yyyy")</p>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Capital</th>
+                <th>Interés</th>
+                <th>Total</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Numero</td>
+                    <td>$@item.Capital.ToString("N2")</td>
+                    <td>$@item.Interes.ToString("N2")</td>
+                    <td>$@item.Total.ToString("N2")</td>
+                    <td>@(item.Pagado ? "Pagado" : "Pendiente")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <a class="btn btn-outline-secondary" asp-action="Prestamo">Volver</a>
+</div>

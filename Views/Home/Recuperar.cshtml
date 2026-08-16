@@ -1,0 +1,39 @@
+@model ProyectoIndursa.Models.RecuperarPasswordViewModel
+@{
+    ViewBag.Title = "Recuperar contraseña";
+}
+
+<partial name="_NavPublic" />
+<div class="container py-5" style="max-width: 480px;">
+    <h1 class="h3 fw-bold text-primary mb-3">Recuperar contraseña</h1>
+    <p class="text-secondary">Confirma tu cuenta, CURP y fecha de nacimiento.</p>
+    <form asp-action="Recuperar" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+        <div class="mb-3">
+            <label asp-for="NoCuenta" class="form-label"></label>
+            <input asp-for="NoCuenta" class="form-control" />
+            <span asp-validation-for="NoCuenta" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Curp" class="form-label"></label>
+            <input asp-for="Curp" class="form-control" />
+            <span asp-validation-for="Curp" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="FechaDeNacimiento" class="form-label"></label>
+            <input asp-for="FechaDeNacimiento" class="form-control" type="date" />
+            <span asp-validation-for="FechaDeNacimiento" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Nueva" class="form-label"></label>
+            <input asp-for="Nueva" class="form-control" />
+            <span asp-validation-for="Nueva" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Confirmacion" class="form-label"></label>
+            <input asp-for="Confirmacion" class="form-control" />
+            <span asp-validation-for="Confirmacion" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Restablecer</button>
+    </form>
+</div>

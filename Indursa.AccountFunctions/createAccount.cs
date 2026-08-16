@@ -6,7 +6,7 @@ namespace ProyectoIndursa.AccountFunctions;
 
 public partial class Account
 {
-    public static int CreateAccount(IndursaDB db, Usuario user, string password)
+    public static int CreateAccount(IndursaDB db, Usuario user, string password, int tipoCuenta = 1)
     {
         if (!CheckCurp(db, user.Curp))
         {
@@ -17,7 +17,7 @@ public partial class Account
         var cuenta = new Cuentum
         {
             NoCuenta = newId,
-            TipoCuenta = 1,
+            TipoCuenta = tipoCuenta,
             Password = PasswordHelper.Hash(password)
         };
         var infocuenta = new InfoCuentum
