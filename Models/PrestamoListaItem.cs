@@ -10,6 +10,10 @@ public class PrestamoListaItem
     public DateTime FechaExpedicion { get; set; }
     public int SolicitadoPor { get; set; }
     public string Solicitante { get; set; } = string.Empty;
+    public decimal Mensualidad { get; set; }
+    public DateTime FechaLimite { get; set; }
+    public bool Vencido { get; set; }
+    public string? MotivoRechazo { get; set; }
 
     public string EstadoTexto => Estado switch
     {

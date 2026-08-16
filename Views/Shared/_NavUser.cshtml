@@ -1,37 +1,32 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm mb-4">
+<nav class="nf-nav" aria-label="Cuenta">
     <div class="container">
-        <a class="navbar-brand fw-bold" asp-controller="User" asp-action="Index">
-            <img src="~/images/logo.png" alt="NeoFintech" class="logo" />
+        <a class="nf-brand" asp-controller="User" asp-action="Index">
+            <span class="nf-brand-mark">N</span>
             NeoFintech
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#userNav"
-            aria-controls="userNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+        <button class="nf-nav-toggle" type="button" data-nf-toggle="userNav" aria-controls="userNav" aria-expanded="false" aria-label="Abrir menú">
+            <span></span>
         </button>
-        <div class="collapse navbar-collapse" id="userNav">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="nav-link" asp-controller="User" asp-action="Saldo">Saldo</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" asp-controller="User" asp-action="Prestamo">Préstamo</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" asp-controller="User" asp-action="Historial">Historial</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" asp-controller="User" asp-action="Perfil">Perfil</a>
-                </li>
+        <div class="nf-nav-collapse" id="userNav">
+            <ul class="nf-nav-links">
+                <li><a class="nf-nav-link" asp-controller="User" asp-action="Saldo">Saldo</a></li>
+                <li><a class="nf-nav-link" asp-controller="User" asp-action="Depositar">Depositar</a></li>
+                <li><a class="nf-nav-link" asp-controller="User" asp-action="Retirar">Retirar</a></li>
+                <li><a class="nf-nav-link" asp-controller="User" asp-action="Transferir">Transferir</a></li>
+                <li><a class="nf-nav-link" asp-controller="User" asp-action="Movimientos">Movimientos</a></li>
+                <li><a class="nf-nav-link" asp-controller="User" asp-action="Prestamo">Préstamos</a></li>
+                <li><a class="nf-nav-link" asp-controller="User" asp-action="Historial">Historial</a></li>
+                <li><a class="nf-nav-link" asp-controller="User" asp-action="Perfil">Perfil</a></li>
                 @if (User.IsInRole("Empleado") || User.IsInRole("Gerente"))
                 {
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="Employee" asp-action="Index">Panel empleado</a>
-                    </li>
+                    <li><a class="nf-nav-link" asp-controller="Employee" asp-action="Index">Empleado</a></li>
                 }
             </ul>
-            <form asp-controller="User" asp-action="Logout" method="post">
-                <button type="submit" class="btn btn-outline-secondary btn-sm">Cerrar sesión</button>
-            </form>
+            <div class="nf-nav-actions">
+                <form asp-controller="User" asp-action="Logout" method="post">
+                    <button type="submit" class="btn btn-outline-secondary btn-sm w-100">Cerrar sesión</button>
+                </form>
+            </div>
         </div>
     </div>
 </nav>

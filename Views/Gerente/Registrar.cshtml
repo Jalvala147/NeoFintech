@@ -1,0 +1,60 @@
+@model ProyectoIndursa.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Registrar empleado";
+}
+
+<partial name="_NavEmployee" />
+<div class="nf-page">
+    <div class="nf-shell">
+        <div class="nf-panel nf-panel--mid">
+            <p class="nf-kicker">Alta</p>
+            <h1 class="nf-title">Registrar empleado</h1>
+            <p class="nf-lead">La cuenta se crea activa y lista para iniciar sesión.</p>
+            <form asp-action="Registrar" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                <div class="nf-grid nf-grid-2">
+                    <div class="mb-3">
+                        <label asp-for="Nombre" class="form-label"></label>
+                        <input asp-for="Nombre" class="form-control" />
+                        <span asp-validation-for="Nombre" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Curp" class="form-label"></label>
+                        <input asp-for="Curp" class="form-control" maxlength="18" />
+                        <span asp-validation-for="Curp" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="nf-grid nf-grid-2">
+                    <div class="mb-3">
+                        <label asp-for="ApellidoPaterno" class="form-label"></label>
+                        <input asp-for="ApellidoPaterno" class="form-control" />
+                        <span asp-validation-for="ApellidoPaterno" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="ApellidoMaterno" class="form-label"></label>
+                        <input asp-for="ApellidoMaterno" class="form-control" />
+                        <span asp-validation-for="ApellidoMaterno" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="FechaDeNacimiento" class="form-label"></label>
+                    <input asp-for="FechaDeNacimiento" class="form-control" type="date" />
+                    <span asp-validation-for="FechaDeNacimiento" class="text-danger"></span>
+                </div>
+                <div class="nf-grid nf-grid-2">
+                    <div class="mb-3">
+                        <label asp-for="Password" class="form-label"></label>
+                        <input asp-for="Password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="ConfirmPassword" class="form-label"></label>
+                        <input asp-for="ConfirmPassword" class="form-control" />
+                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Crear empleado</button>
+            </form>
+        </div>
+    </div>
+</div>

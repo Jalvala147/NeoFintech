@@ -17,6 +17,9 @@ public partial class Empleado
     [Column("No_Cuenta", TypeName = "INT")]
     public int NoCuenta { get; set; }
 
+    [Column("Dias_Vacaciones")]
+    public long DiasVacaciones { get; set; }
+
     [InverseProperty("NominaNavigation")]
     public virtual ICollection<Gerente> Gerentes { get; } = new List<Gerente>();
 

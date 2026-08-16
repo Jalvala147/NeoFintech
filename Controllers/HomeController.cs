@@ -24,6 +24,11 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
+        if (User.Identity?.IsAuthenticated == true)
+        {
+            return RedirectAfterLogin();
+        }
+
         return View();
     }
 
@@ -62,7 +67,10 @@ public class HomeController : Controller
 
         if (cuenta.TipoCuenta == 3)
         {
-            ModelState.AddModelError(string.Empty, "Tu solicitud de cuenta fue rechazada.");
+            var motivo = string.IsNullOrWhiteSpace(cuenta.MotivoRechazo)
+                ? string.Empty
+                : $" Motivo: {cuenta.MotivoRechazo}";
+            ModelState.AddModelError(string.Empty, "Tu solicitud de cuenta fue rechazada." + motivo);
             return View(model);
         }
 
@@ -156,6 +164,47 @@ public class HomeController : Controller
 
         ViewBag.NoCuenta = TempData["NoCuenta"];
         return View();
+    }
+
+    [HttpGet]
+    [AllowAnonymous]
+    public IActionResult Recuperar()
+    {
+        return View(new RecuperarPasswordViewModel());
+    }
+
+    [HttpPost]
+    [AllowAnonymous]
+    [ValidateAntiForgeryToken]
+    public IActionResult Recuperar(RecuperarPasswordViewModel model)
+    {
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+
+        var usuario = _db.Usuarios.FirstOrDefault(u =>
+            u.NoCuenta == model.NoCuenta &&
+            u.Curp.ToUpper() == model.Curp.Trim().ToUpper());
+        if (usuario == null ||
+            model.FechaDeNacimiento is null ||
+            usuario.FechaDeNacimiento.ToString("yyyy-MM-dd") != model.FechaDeNacimiento.Value.ToString("yyyy-MM-dd"))
+        {
+            ModelState.AddModelError(string.Empty, "Los datos no coinciden con ninguna cuenta.");
+            return View(model);
+        }
+
+        var cuenta = _db.Cuenta.FirstOrDefault(c => c.NoCuenta == model.NoCuenta);
+        if (cuenta == null || cuenta.TipoCuenta != 2)
+        {
+            ModelState.AddModelError(string.Empty, "La cuenta no está activa.");
+            return View(model);
+        }
+
+        cuenta.Password = PasswordHelper.Hash(model.Nueva);
+        _db.SaveChanges();
+        TempData["Ok"] = "Contraseña restablecida. Ya puedes iniciar sesión.";
+        return RedirectToAction(nameof(Login));
     }
 
     [AllowAnonymous]

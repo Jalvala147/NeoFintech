@@ -1,0 +1,47 @@
+@model IEnumerable<ProyectoIndursa.Models.AmortizacionItem>
+@{
+    ViewBag.Title = "Detalle de préstamo";
+    var prestamo = (ProyectoIndursa.Models.PrestamoListaItem)ViewBag.Prestamo;
+}
+
+<partial name="_NavUser" />
+<div class="nf-page">
+    <div class="nf-shell">
+        <p class="nf-kicker">Folio @prestamo.Folio</p>
+        <h1 class="nf-title">Detalle del préstamo</h1>
+        <p class="nf-lead">
+            Monto $@prestamo.Cantidad.ToString("N2") · Mensualidad $@prestamo.Mensualidad.ToString("N2")
+            · Límite @prestamo.FechaLimite.ToString("dd/MM/yyyy")
+        </p>
+        <div class="nf-table-wrap">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Capital</th>
+                        <th>Interés</th>
+                        <th>Total</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Numero</td>
+                            <td>$@item.Capital.ToString("N2")</td>
+                            <td>$@item.Interes.ToString("N2")</td>
+                            <td>$@item.Total.ToString("N2")</td>
+                            <td>
+                                <span class="nf-badge @(item.Pagado ? "nf-badge--ok" : "nf-badge--muted")">
+                                    @(item.Pagado ? "Pagado" : "Pendiente")
+                                </span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <a class="btn btn-outline-secondary mt-3" asp-action="Prestamo">Volver</a>
+    </div>
+</div>

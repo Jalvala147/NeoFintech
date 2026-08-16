@@ -1,20 +1,26 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+@{
+    var heroNav = ViewBag.HeroNav as bool? == true;
+}
+<nav class="nf-nav @(heroNav ? "nf-nav--public nf-nav--dark" : "")" aria-label="Principal">
     <div class="container">
-        <a class="navbar-brand fw-bold" asp-controller="Home" asp-action="Index">
+        <a class="nf-brand" asp-controller="Home" asp-action="Index">
+            <span class="nf-brand-mark">N</span>
             NeoFintech
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#publicNav"
-            aria-controls="publicNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+        <button class="nf-nav-toggle @(heroNav ? "text-white" : "")" type="button" data-nf-toggle="publicNav" aria-controls="publicNav" aria-expanded="false" aria-label="Abrir menú">
+            <span></span>
         </button>
-        <div class="collapse navbar-collapse" id="publicNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" asp-controller="Home" asp-action="Login">Iniciar sesión</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" asp-controller="Home" asp-action="Register">Solicitar cuenta</a>
-                </li>
+        <div class="nf-nav-collapse" id="publicNav">
+            <ul class="nf-nav-links">
+                @if (User.Identity?.IsAuthenticated == true)
+                {
+                    <li><a class="nf-nav-link" asp-controller="User" asp-action="Index">Mi cuenta</a></li>
+                }
+                else
+                {
+                    <li><a class="nf-nav-link" asp-controller="Home" asp-action="Login">Iniciar sesión</a></li>
+                    <li><a class="nf-nav-link" asp-controller="Home" asp-action="Register">Solicitar cuenta</a></li>
+                }
             </ul>
         </div>
     </div>

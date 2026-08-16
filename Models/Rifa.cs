@@ -18,7 +18,9 @@ public partial class Rifa
     public int Cuenta { get; set; }
 
     [Column("Fecha_Boleto", TypeName = "datetime")]
-    public byte[] FechaBoleto { get; set; } = null!;
+    public DateTime FechaBoleto { get; set; }
+
+    public int Ganador { get; set; }
 
     [ForeignKey("Cuenta")]
     [InverseProperty("Rifas")]

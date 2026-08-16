@@ -1,0 +1,33 @@
+@model ProyectoIndursa.Models.TransferirViewModel
+@{
+    ViewBag.Title = "Transferir";
+}
+
+<partial name="_NavUser" />
+<div class="nf-page">
+    <div class="nf-shell">
+        <div class="nf-panel nf-panel--narrow">
+            <p class="nf-kicker">Movimiento</p>
+            <h1 class="nf-title">Transferir</h1>
+            <p class="nf-lead">Envía dinero a otra cuenta activa de NeoFintech.</p>
+            <form asp-action="Transferir" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                <div class="mb-3">
+                    <label asp-for="CuentaDestino" class="form-label"></label>
+                    <input asp-for="CuentaDestino" class="form-control" />
+                    <span asp-validation-for="CuentaDestino" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Monto" class="form-label"></label>
+                    <input asp-for="Monto" class="form-control" type="number" min="1" step="0.01" />
+                    <span asp-validation-for="Monto" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Concepto" class="form-label"></label>
+                    <input asp-for="Concepto" class="form-control" placeholder="Opcional" />
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Enviar transferencia</button>
+            </form>
+        </div>
+    </div>
+</div>

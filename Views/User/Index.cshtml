@@ -1,20 +1,48 @@
+@model IEnumerable<ProyectoIndursa.Models.Notificacion>
 @{
     ViewBag.Title = "Inicio";
 }
 
 <partial name="_NavUser" />
-<div class="container pb-5">
-    <h1 class="h3">Hola, @ViewBag.Nombre</h1>
-    <p class="text-secondary">Cuenta @ViewBag.NoCuenta</p>
-    <div class="row g-3">
-        <div class="col-md-4">
-            <a class="btn btn-outline-primary w-100" asp-action="Saldo">Ver saldo</a>
+<div class="nf-page">
+    <div class="nf-shell">
+        <div class="nf-reveal">
+            <p class="nf-kicker">Panel</p>
+            <h1 class="nf-title">Hola, @ViewBag.Nombre</h1>
+            <p class="nf-lead">Cuenta @ViewBag.NoCuenta</p>
         </div>
-        <div class="col-md-4">
-            <a class="btn btn-outline-primary w-100" asp-action="Prestamo">Préstamos</a>
+        <partial name="_Alerts" />
+
+        <div class="nf-balance mb-4 nf-reveal nf-reveal-delay-1">
+            <div class="label">Saldo disponible</div>
+            <p class="value">$@(((decimal)ViewBag.Saldo).ToString("N2"))</p>
+            <div class="actions">
+                <a class="btn btn-primary" asp-action="Depositar">Depositar</a>
+                <a class="btn btn-outline-primary" asp-action="Transferir">Transferir</a>
+                <a class="btn btn-outline-primary" asp-action="Movimientos">Movimientos</a>
+            </div>
         </div>
-        <div class="col-md-4">
-            <a class="btn btn-outline-primary w-100" asp-action="Perfil">Perfil</a>
+
+        @if (Model.Any())
+        {
+            <div class="alert alert-info mb-4">
+                <strong>Avisos recientes</strong>
+                <ul class="mb-0 mt-2">
+                    @foreach (var aviso in Model)
+                    {
+                        <li>@aviso.Mensaje</li>
+                    }
+                </ul>
+            </div>
+        }
+
+        <div class="nf-grid nf-grid-3 nf-reveal nf-reveal-delay-2">
+            <a class="nf-action" asp-action="Retirar"><strong>Retirar</strong><span>Saca efectivo digital</span></a>
+            <a class="nf-action" asp-action="Prestamo"><strong>Préstamos</strong><span>Solicita o paga</span></a>
+            <a class="nf-action" asp-action="Historial"><strong>Historial</strong><span>Tus créditos</span></a>
+            <a class="nf-action" asp-action="Perfil"><strong>Perfil</strong><span>Datos y seguridad</span></a>
+            <a class="nf-action" asp-action="Saldo"><strong>Detalle de saldo</strong><span>Vista simple</span></a>
+            <a class="nf-action" asp-action="Depositar"><strong>Nuevo depósito</strong><span>Desde $1</span></a>
         </div>
     </div>
 </div>

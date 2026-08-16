@@ -1,0 +1,24 @@
+@model ProyectoIndursa.Models.OperacionMontoViewModel
+@{
+    ViewBag.Title = "Depositar";
+}
+
+<partial name="_NavUser" />
+<div class="nf-page">
+    <div class="nf-shell">
+        <div class="nf-panel nf-panel--narrow">
+            <p class="nf-kicker">Movimiento</p>
+            <h1 class="nf-title">Depositar</h1>
+            <p class="nf-lead">Un depósito de $500 o más te da un boleto de rifa.</p>
+            <form asp-action="Depositar" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                <div class="mb-3">
+                    <label asp-for="Monto" class="form-label"></label>
+                    <input asp-for="Monto" class="form-control" type="number" min="1" step="0.01" />
+                    <span asp-validation-for="Monto" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Confirmar depósito</button>
+            </form>
+        </div>
+    </div>
+</div>

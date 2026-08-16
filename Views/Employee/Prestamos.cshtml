@@ -4,60 +4,69 @@
 }
 
 <partial name="_NavEmployee" />
-<div class="container pb-5">
-    <h1 class="h3 mb-3">Solicitudes de préstamo</h1>
-    @if (TempData["Ok"] is string ok)
-    {
-        <div class="alert alert-success">@ok</div>
-    }
-    @if (TempData["Error"] is string error)
-    {
-        <div class="alert alert-danger">@error</div>
-    }
-    @if (!Model.Any())
-    {
-        <p class="text-secondary">No hay préstamos registrados.</p>
-    }
-    else
-    {
-        <table class="table table-striped align-middle">
-            <thead>
-                <tr>
-                    <th>Folio</th>
-                    <th>Cuenta</th>
-                    <th>Solicitante</th>
-                    <th>Cantidad</th>
-                    <th>Fecha</th>
-                    <th>Estado</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>@item.Folio</td>
-                        <td>@item.SolicitadoPor</td>
-                        <td>@item.Solicitante</td>
-                        <td>$@item.Cantidad.ToString("N2")</td>
-                        <td>@(item.FechaExpedicion == default ? "N/D" : item.FechaExpedicion.ToString("dd/MM/yyyy"))</td>
-                        <td>@item.EstadoTexto</td>
-                        <td>
-                            @if (item.Estado == 0)
-                            {
-                                <form asp-action="AcceptPrestamo" method="post" class="d-inline">
-                                    <input type="hidden" name="folio" value="@item.Folio" />
-                                    <button type="submit" class="btn btn-success btn-sm">Aprobar</button>
-                                </form>
-                                <form asp-action="RejectPrestamo" method="post" class="d-inline">
-                                    <input type="hidden" name="folio" value="@item.Folio" />
-                                    <button type="submit" class="btn btn-outline-danger btn-sm">Rechazar</button>
-                                </form>
-                            }
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    }
+<div class="nf-page">
+    <div class="nf-shell">
+        <p class="nf-kicker">Crédito</p>
+        <h1 class="nf-title mb-3">Solicitudes de préstamo</h1>
+        <partial name="_Alerts" />
+        @if (!Model.Any())
+        {
+            <div class="nf-panel nf-empty">No hay préstamos registrados.</div>
+        }
+        else
+        {
+            <div class="nf-table-wrap">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Folio</th>
+                            <th>Cuenta</th>
+                            <th>Solicitante</th>
+                            <th>Cantidad</th>
+                            <th>Fecha</th>
+                            <th>Estado</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Folio</td>
+                                <td>@item.SolicitadoPor</td>
+                                <td>@item.Solicitante</td>
+                                <td>$@item.Cantidad.ToString("N2")</td>
+                                <td>@(item.FechaExpedicion == default ? "N/D" : item.FechaExpedicion.ToString("dd/MM/yyyy"))</td>
+                                <td>
+                                    <span class="nf-badge @(item.Estado switch { 1 => "nf-badge--ok", 0 => "nf-badge--warn", 2 => "nf-badge--danger", 3 => "nf-badge--info", _ => "nf-badge--muted" })">
+                                        @item.EstadoTexto
+                                    </span>
+                                    @if (!string.IsNullOrEmpty(item.MotivoRechazo))
+                                    {
+                                        <div class="small text-muted mt-1">@item.MotivoRechazo</div>
+                                    }
+                                </td>
+                                <td>
+                                    @if (item.Estado == 0)
+                                    {
+                                        <div class="nf-inline-actions">
+                                            <form asp-action="AcceptPrestamo" method="post">
+                                                <input type="hidden" name="folio" value="@item.Folio" />
+                                                <button type="submit" class="btn btn-success btn-sm">Aprobar</button>
+                                            </form>
+                                            <form asp-action="RejectPrestamo" method="post" class="d-flex gap-1 flex-wrap">
+                                                <input type="hidden" name="folio" value="@item.Folio" />
+                                                <input name="motivo" class="form-control form-control-sm" placeholder="Motivo" required />
+                                                <button type="submit" class="btn btn-outline-danger btn-sm">Rechazar</button>
+                                            </form>
+                                        </div>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
 </div>

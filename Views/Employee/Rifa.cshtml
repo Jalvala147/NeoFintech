@@ -1,0 +1,44 @@
+@model IEnumerable<ProyectoIndursa.Models.Rifa>
+@{
+    ViewBag.Title = "Rifa";
+}
+
+<partial name="_NavEmployee" />
+<div class="nf-page">
+    <div class="nf-shell">
+        <p class="nf-kicker">Promoción</p>
+        <h1 class="nf-title">Rifa</h1>
+        <p class="nf-lead">Boletos participantes: <strong>@ViewBag.Participantes</strong>. Premio: $1,000.</p>
+        <partial name="_Alerts" />
+        <form asp-action="SortearRifa" method="post" class="mb-3">
+            <button type="submit" class="btn btn-primary">Sortear ganador</button>
+        </form>
+        <div class="nf-table-wrap">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Boleto</th>
+                        <th>Cuenta</th>
+                        <th>Fecha</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.NoBoleto</td>
+                            <td>@item.Cuenta</td>
+                            <td>@item.FechaBoleto.ToString("dd/MM/yyyy")</td>
+                            <td>
+                                <span class="nf-badge @(item.Ganador == 1 ? "nf-badge--ok" : "nf-badge--muted")">
+                                    @(item.Ganador == 1 ? "Ganador" : "Participante")
+                                </span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

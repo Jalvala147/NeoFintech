@@ -26,6 +26,9 @@ public partial class EstadoPrestamo
     [Column(TypeName = "tinyint")]
     public int Estado { get; set; }
 
+    [Column("Motivo_Rechazo")]
+    public string? MotivoRechazo { get; set; }
+
     [ForeignKey("Folio")]
     [InverseProperty("EstadoPrestamos")]
     public virtual Prestamo FolioNavigation { get; set; } = null!;

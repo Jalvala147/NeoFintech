@@ -25,7 +25,8 @@ public class RegisterViewModel
     public DateTime? FechaDeNacimiento { get; set; }
 
     [Required(ErrorMessage = "Se requiere CURP")]
-    [StringLength(18, MinimumLength = 4, ErrorMessage = "El CURP debe tener entre 4 y 18 caracteres")]
+    [StringLength(18, MinimumLength = 18, ErrorMessage = "El CURP debe tener 18 caracteres")]
+    [RegularExpression(@"^[A-Za-z0-9]{18}$", ErrorMessage = "El CURP debe tener 18 letras o números")]
     [Display(Name = "CURP")]
     public string Curp { get; set; } = string.Empty;
 

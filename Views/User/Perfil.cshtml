@@ -2,28 +2,64 @@
 @{
     ViewBag.Title = "Perfil";
     var usuario = ViewBag.Usuario as Usuario;
+    var boletos = ViewBag.Boletos as IEnumerable<Rifa> ?? Enumerable.Empty<Rifa>();
 }
 
 <partial name="_NavUser" />
-<div class="container pb-5" style="max-width: 640px;">
-    <h1 class="h3 mb-3">Información de cuenta</h1>
-    @if (usuario == null)
-    {
-        <p class="text-secondary">No se encontraron datos del usuario.</p>
-    }
-    else
-    {
-        <dl class="row">
-            <dt class="col-sm-4">Número de cuenta</dt>
-            <dd class="col-sm-8">@usuario.NoCuenta</dd>
-            <dt class="col-sm-4">Nombre</dt>
-            <dd class="col-sm-8">@usuario.Nombre @usuario.ApellidoPaterno @usuario.ApellidoMaterno</dd>
-            <dt class="col-sm-4">CURP</dt>
-            <dd class="col-sm-8">@usuario.Curp</dd>
-            <dt class="col-sm-4">Fecha de nacimiento</dt>
-            <dd class="col-sm-8">@usuario.FechaDeNacimiento.ToString("dd/MM/yyyy")</dd>
-            <dt class="col-sm-4">Saldo</dt>
-            <dd class="col-sm-8">$@(((decimal)ViewBag.Saldo).ToString("N2"))</dd>
-        </dl>
-    }
+<div class="nf-page">
+    <div class="nf-shell">
+        <p class="nf-kicker">Cuenta</p>
+        <h1 class="nf-title mb-3">Información de cuenta</h1>
+        <partial name="_Alerts" />
+
+        @if (usuario == null)
+        {
+            <div class="nf-panel nf-empty">No se encontraron datos del usuario.</div>
+        }
+        else
+        {
+            <div class="nf-panel nf-panel--mid mb-4" style="margin-left:0;">
+                <dl class="row mb-0">
+                    <dt class="col-sm-4 nf-meta">Número de cuenta</dt>
+                    <dd class="col-sm-8 fw-semibold">@usuario.NoCuenta</dd>
+                    <dt class="col-sm-4 nf-meta">Nombre</dt>
+                    <dd class="col-sm-8 fw-semibold">@usuario.Nombre @usuario.ApellidoPaterno @usuario.ApellidoMaterno</dd>
+                    <dt class="col-sm-4 nf-meta">CURP</dt>
+                    <dd class="col-sm-8 fw-semibold">@usuario.Curp</dd>
+                    <dt class="col-sm-4 nf-meta">Fecha de nacimiento</dt>
+                    <dd class="col-sm-8 fw-semibold">@usuario.FechaDeNacimiento.ToString("dd/MM/yyyy")</dd>
+                    <dt class="col-sm-4 nf-meta">Saldo</dt>
+                    <dd class="col-sm-8 fw-semibold">$@(((decimal)ViewBag.Saldo).ToString("N2"))</dd>
+                </dl>
+                <div class="nf-toolbar mt-3 mb-0">
+                    <a class="btn btn-primary" asp-action="EditarPerfil">Editar perfil</a>
+                    <a class="btn btn-outline-primary" asp-action="CambiarPassword">Cambiar contraseña</a>
+                </div>
+            </div>
+        }
+
+        <h2 class="h4 mb-3">Boletos de rifa</h2>
+        @if (!boletos.Any())
+        {
+            <div class="nf-panel nf-empty">Aún no tienes boletos. Deposita $500 o más para participar.</div>
+        }
+        else
+        {
+            <div class="nf-panel">
+                <ul class="nf-list-plain">
+                    @foreach (var boleto in boletos)
+                    {
+                        <li>
+                            <strong>Boleto @boleto.NoBoleto</strong>
+                            <span class="nf-meta"> · @boleto.FechaBoleto.ToString("dd/MM/yyyy")</span>
+                            @if (boleto.Ganador == 1)
+                            {
+                                <span class="nf-badge nf-badge--ok ms-2">Ganador</span>
+                            }
+                        </li>
+                    }
+                </ul>
+            </div>
+        }
+    </div>
 </div>

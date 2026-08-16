@@ -1,0 +1,38 @@
+@model ProyectoIndursa.Models.ComprobanteViewModel
+@{
+    ViewBag.Title = "Comprobante";
+}
+
+<partial name="_NavUser" />
+<div class="nf-page">
+    <div class="nf-shell">
+        <div class="nf-panel nf-panel--mid">
+            <p class="nf-kicker">Operación exitosa</p>
+            <h1 class="nf-title">Comprobante</h1>
+            <div class="nf-receipt mt-3">
+                <dl>
+                    <dt>Folio</dt>
+                    <dd>@Model.Folio</dd>
+                    <dt>Cuenta</dt>
+                    <dd>@Model.NoCuenta</dd>
+                    <dt>Tipo</dt>
+                    <dd>@Model.Tipo</dd>
+                    <dt>Concepto</dt>
+                    <dd>@Model.Concepto</dd>
+                    <dt>Monto</dt>
+                    <dd>$@Model.Monto.ToString("N2")</dd>
+                    <dt>Saldo resultante</dt>
+                    <dd>$@Model.SaldoResultante.ToString("N2")</dd>
+                    <dt>Referencia</dt>
+                    <dd>@(Model.Referencia ?? "—")</dd>
+                    <dt>Fecha</dt>
+                    <dd>@Model.Fecha.ToString("dd/MM/yyyy HH:mm")</dd>
+                </dl>
+            </div>
+            <div class="nf-toolbar mt-3 mb-0">
+                <a class="btn btn-primary" asp-action="Movimientos">Ver movimientos</a>
+                <a class="btn btn-outline-secondary" asp-action="Index">Inicio</a>
+            </div>
+        </div>
+    </div>
+</div>

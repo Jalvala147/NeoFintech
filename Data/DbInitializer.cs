@@ -11,6 +11,8 @@ public static class DbInitializer
 
     public static void Seed(IndursaDB db)
     {
+        Schema.Ensure(db);
+
         if (!db.Cuenta.Any(c => c.NoCuenta == EmpleadoNoCuenta))
         {
             db.Cuenta.Add(new Cuentum
@@ -35,15 +37,55 @@ public static class DbInitializer
             });
         }
 
-        if (!db.Empleados.Any())
+        if (!db.Empleados.Any(e => e.NoCuenta == EmpleadoNoCuenta))
         {
+            var nomina = db.Empleados.Select(e => e.Nomina).ToList().DefaultIfEmpty(0).Max() + 1;
             db.Empleados.Add(new Empleado
             {
-                Nomina = 1,
-                NoCuenta = EmpleadoNoCuenta
+                Nomina = nomina,
+                NoCuenta = EmpleadoNoCuenta,
+                DiasVacaciones = 12
             });
         }
 
         db.SaveChanges();
+
+        var empleadoDemo = db.Empleados.First(e => e.NoCuenta == EmpleadoNoCuenta);
+        if (!db.Gerentes.Any(g => g.Nomina == empleadoDemo.Nomina))
+        {
+            empleadoDemo.DiasVacaciones = empleadoDemo.DiasVacaciones == 0 ? 12 : empleadoDemo.DiasVacaciones;
+            db.Gerentes.Add(new Gerente
+            {
+                Nomina = empleadoDemo.Nomina,
+                DiasVacaciones = empleadoDemo.DiasVacaciones
+            });
+        }
+
+        AsegurarCuentaDemo(db, EmpleadoNoCuenta, EmpleadoPassword, 2);
+        AsegurarCuentaDemo(db, 72235, "waeee", 2);
+        AsegurarCuentaDemo(db, 93386, "eeeaaa", 2);
+
+        foreach (var cuenta in db.Cuenta.ToList())
+        {
+            if (!db.InfoCuenta.Any(i => i.NoCuenta == cuenta.NoCuenta))
+            {
+                db.InfoCuenta.Add(new InfoCuentum { NoCuenta = cuenta.NoCuenta, Saldo = 10000 });
+            }
+        }
+
+        db.SaveChanges();
+    }
+
+    private static void AsegurarCuentaDemo(IndursaDB db, int noCuenta, string password, int tipoCuenta)
+    {
+        var cuenta = db.Cuenta.FirstOrDefault(c => c.NoCuenta == noCuenta);
+        if (cuenta == null)
+        {
+            return;
+        }
+
+        cuenta.Password = PasswordHelper.Hash(password);
+        cuenta.TipoCuenta = tipoCuenta;
+        cuenta.MotivoRechazo = null;
     }
 }
