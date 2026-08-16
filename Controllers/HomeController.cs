@@ -183,7 +183,7 @@ public class HomeController : Controller
             u.Curp.ToUpper() == model.Curp.Trim().ToUpper());
         if (usuario == null ||
             model.FechaDeNacimiento is null ||
-            usuario.FechaDeNacimiento.Date != model.FechaDeNacimiento.Value.Date)
+            usuario.FechaDeNacimiento.ToString("yyyy-MM-dd") != model.FechaDeNacimiento.Value.ToString("yyyy-MM-dd"))
         {
             ModelState.AddModelError(string.Empty, "Los datos no coinciden con ninguna cuenta.");
             return View(model);
