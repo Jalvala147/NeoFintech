@@ -3,11 +3,27 @@
 }
 
 <partial name="_NavPublic" />
-<header class="bg-light text-center py-5" style="min-height: 70vh; display: flex; justify-content: center; align-items: center;">
-    <div class="container text-center">
-        <h1 class="display-3 fw-bold text-primary">Bienvenido a NeoFintech</h1>
-        <p class="lead text-secondary">Tu solución financiera moderna y confiable</p>
+<header class="bg-light text-center py-5">
+    <div class="container py-5">
+        <h1 class="display-4 fw-bold text-primary">Bienvenido a NeoFintech</h1>
+        <p class="lead text-secondary mb-4">Banca digital para cuentas, movimientos, préstamos y rifas.</p>
         <a class="btn btn-primary btn-lg me-2" asp-controller="Home" asp-action="Login">Iniciar sesión</a>
         <a class="btn btn-outline-primary btn-lg" asp-controller="Home" asp-action="Register">Solicitar cuenta</a>
     </div>
 </header>
+<section class="container py-5">
+    <div class="row g-4">
+        <div class="col-md-4">
+            <h2 class="h5">Tu dinero</h2>
+            <p class="text-secondary mb-0">Consulta saldo, deposita, retira y transfiere entre cuentas con comprobante.</p>
+        </div>
+        <div class="col-md-4">
+            <h2 class="h5">Préstamos</h2>
+            <p class="text-secondary mb-0">Solicita, espera aprobación, paga mensualidades y revisa la amortización.</p>
+        </div>
+        <div class="col-md-4">
+            <h2 class="h5">Empleados</h2>
+            <p class="text-secondary mb-0">Aprueban cuentas y créditos, sortean la rifa y la gerencia da de alta personal.</p>
+        </div>
+    </div>
+</section>

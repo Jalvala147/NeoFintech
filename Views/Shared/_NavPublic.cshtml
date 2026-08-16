@@ -9,12 +9,21 @@
         </button>
         <div class="collapse navbar-collapse" id="publicNav">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" asp-controller="Home" asp-action="Login">Iniciar sesión</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" asp-controller="Home" asp-action="Register">Solicitar cuenta</a>
-                </li>
+                @if (User.Identity?.IsAuthenticated == true)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="User" asp-action="Index">Mi cuenta</a>
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Home" asp-action="Login">Iniciar sesión</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Home" asp-action="Register">Solicitar cuenta</a>
+                    </li>
+                }
             </ul>
         </div>
     </div>
